@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  root "pages#index"
+  root to: "pages#index"
+get "/home" => "pages#index", as: :home
+get "/About" => "pages#about", as: :about
+get "/Terms" => "pages#terms", as: :terms
 
 
 

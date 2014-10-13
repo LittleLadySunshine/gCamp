@@ -3,6 +3,8 @@
 <head>
   <title>Gcamp</title><style type='text/css'>
 
+
+
 </style>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -43,7 +45,6 @@
   </head>
 
   <body>
-<%= yield %>
     <div class="navbar navbar-inverse navbar-fixed-top topBar" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -70,35 +71,21 @@
   </div>
 
   <div class="container">
+  <div class="row">
 
+<%=yield%>
 
-        <div class="col-md-4">
-          <img src="https://farm6.staticflickr.com/5349/8969237967_c5960fc544_n.jpg" class="img-repsonsive">
-        <h2>Tasks</h2>
-          <p>Grouped by projects and lists. Just the way you like them. </p>
-        </div>
-
-
-        <div class="col-md-4">
-          <img src="https://farm6.staticflickr.com/5267/5783999789_9d06e5d7df_n.jpg">
-          <h2>Documents</h2>
-          <p><li>Upload</li><li>Comment</li><li>Revise</li></p>
-       </div>
-
-
-
-        <div class="col-md-4">
-          <img src="https://farm6.staticflickr.com/5349/8969237967_c5960fc544_n.jpg" class="img-repsonsive">
-          <h2>Comments</h2>
-          <p><li>Comment on tasks and documents.</li><li>Get email notification.</p>
-        </div>
-
-
+  </div>
 </div>
       <hr>
 
       <footer>
         <p>&copy; Denise McCoy 2014</p>
+
+    <div>
+          <h><%= link_to("About", about_path) %></h>
+          <h><%= link_to "Terms", terms_path %></h></div>
+          <hr>
       </footer>
     </div> <!-- /container -->
 
