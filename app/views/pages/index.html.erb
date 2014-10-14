@@ -42,3 +42,19 @@
 
 </div>
 </div>
+
+
+
+<% quotes = [
+  ["Keep your eyes on the stars, and your feet on the ground.", "Theodore Roosevelt"],
+  ["Start where you are. Use what you have. Do what you can", "Arthur Ashe"],
+  ["A creative man is motivated by the desire to achieve, not by the desire to beat others.","Ayn Rand"]
+
+]
+%>
+
+<% quotes.each do |quote| %>
+  <h4><%= quote[0] %> -- <%=quote[1] %>
+  </h4>
+  <br>
+<% end %>
