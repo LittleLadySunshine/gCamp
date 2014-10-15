@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 get "/home" => "pages#index", as: :home
 get "/About" => "pages#about", as: :about
 get "/Terms" => "pages#terms", as: :terms
+get "/faqs" => "pages#faqs", as: :faqs
 
 
 
