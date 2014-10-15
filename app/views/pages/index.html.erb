@@ -9,15 +9,10 @@
       </button>
       <a class="navbar-brand" href="#">gCamp</a>
     </div>
-    </div><!--/.navbar-collapse -->
-  </div>
+  </div><!--/.navbar-collapse -->
 </div>
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-
-
-<div class="container">
-<div class="row">
+  <!-- Main jumbotron for a primary marketing message or call to action -->
 
   <div class="jumbotron">
     <div class="container">
@@ -25,65 +20,57 @@
       <p>Your life, organized.</p>
     </div>
   </div>
-</div>
-</div>
 
-<div class="col-md-4">
-
-<img src="https://farm3.staticflickr.com/2105/2197888496_c43488fc0e_n.jpg" class="img-repsonsive">
-<br>
-<br>
-  <div class="panel panel-default" style="width: 320px">
-    <div class="panel-heading">
-      <h3 class="panel-title">Tasks</h3>
+<div class="row">
+  <div class="col-md-4">
+    <img src="https://farm3.staticflickr.com/2105/2197888496_c43488fc0e_n.jpg" class="img-repsonsive">
+    <br>
+    <br>
+    <div class="panel panel-default" style="width: 320px">
+      <div class="panel-heading">
+        <h3 class="panel-title">Tasks</h3>
+      </div>
+      <div class="panel-body">
+        Grouped by projects and lists. Just the way you like them.
+      </div>
     </div>
-  <div class="panel-body">
-    Grouped by projects and lists. Just the way you like them.
+  </div>
+
+  <div class="col-md-4">
+    <img src="https://farm6.staticflickr.com/5267/5783999789_9d06e5d7df_n.jpg">
+    <br>
+    <br>
+    <div class="panel panel-default" style="width: 320px">
+      <div class="panel-heading">
+        <h3 class="panel-title">Documents</h3>
+      </div>
+      <div class="panel-body">
+        <li>Upload</li><li>Comment</li><li>Revise</li>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-4">
+    <img src="https://farm6.staticflickr.com/5349/8969237967_c5960fc544_n.jpg" class="img-repsonsive">
+    <br>
+    <br>
+    <div class="panel panel-default" style="width: 320px">
+      <div class="panel-heading">
+        <h3 class="panel-title">Comments</h3>
+      </div>
+      <div class="panel-body">
+        <li>Comment on tasks and documents.</li><li>Get email notification.</li>
+      </div>
     </div>
   </div>
 </div>
-
-<div class="col-md-4">
-  <img src="https://farm6.staticflickr.com/5267/5783999789_9d06e5d7df_n.jpg">
-  <br>
-  <br>
-  <div class="panel panel-default" style="width: 320px">
-    <div class="panel-heading">
-      <h3 class="panel-title">Documents</h3>
-    </div>
-    <div class="panel-body">
-      <li>Upload</li><li>Comment</li><li>Revise</li>
-    </div>
-  </div>
-</div>
-
-
-<div class="col-md-4">
-  <img src="https://farm6.staticflickr.com/5349/8969237967_c5960fc544_n.jpg" class="img-repsonsive">
-  <br>
-  <br>
-  <div class="panel panel-default" style="width: 320px">
-    <div class="panel-heading">
-      <h3 class="panel-title">Comments</h3>
-    </div>
-    <div class="panel-body">
-      <li>Comment on tasks and documents.</li><li>Get email notification.</li>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
-
 <hr>
-
 
 <% @quotes.each do |quote| %>
   <blockquote>
     <p><%= quote.text %></p>
     <footer> <cite title="Source Title"><%=quote.author %></cite></footer>
   </blockquote>
-<footer class="page-footer" style="width: 1140px">
-</footer>
 <% end %>
-</div>
+<footer class="page-footer" style="width: 1140px"></footer>
