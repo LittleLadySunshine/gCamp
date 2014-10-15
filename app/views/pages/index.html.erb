@@ -80,8 +80,8 @@
 
 <% @quotes.each do |quote| %>
   <blockquote>
-    <p><%= quote[0] %></p>
-    <footer> <cite title="Source Title"><%=quote[1] %></cite></footer>
+    <p><%= quote.text %></p>
+    <footer> <cite title="Source Title"><%=quote.author %></cite></footer>
   </blockquote>
 <footer class="page-footer" style="width: 1140px">
 </footer>
