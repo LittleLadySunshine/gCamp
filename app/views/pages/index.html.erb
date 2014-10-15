@@ -19,6 +19,15 @@
 <div class="container">
 <div class="row">
 
+  <div class="jumbotron">
+    <div class="container">
+      <h1><b>gCamp</b></h1>
+      <p>Your life, organized.</p>
+    </div>
+  </div>
+</div>
+</div>
+
 <div class="col-md-4">
 
 <img src="https://farm3.staticflickr.com/2105/2197888496_c43488fc0e_n.jpg" class="img-repsonsive">
@@ -68,19 +77,13 @@
 
 <hr>
 
-<% quotes = [
-  ['"Keep your eyes on the stars, and your feet on the ground."', "Theodore Roosevelt"],
-  ['"Start where you are. Use what you have. Do what you can."', "Arthur Ashe"],
-  ['"A creative man is motivated by the desire to achieve, not by the desire to beat others."',"Ayn Rand"]
 
-]
-%>
-<footer class="page-footer" style="width 1140px">
-<% quotes.each do |quote| %>
+<% @quotes.each do |quote| %>
   <blockquote>
     <p><%= quote[0] %></p>
     <footer> <cite title="Source Title"><%=quote[1] %></cite></footer>
   </blockquote>
+<footer class="page-footer" style="width: 1140px">
 </footer>
 <% end %>
 </div>

@@ -26,7 +26,9 @@
   background-color: gray;
   border: black;
   font-family: "Comic sans MS";
-  text-align: center;
+  text-align: left;
+  min-width: 1140px;
+  margin: top 15px;
 }
 
 body {
@@ -37,10 +39,12 @@ body {
 .page-footer {
   text-align: left;
   color: black;
+  background-color: orange;
+  indent: 50px
 }
 
 .image_location {
-   display: block;
+  display: block;
   margin-left: auto;
   margin-right: auto;
   height: 35%;
@@ -62,9 +66,8 @@ blockquote {
 
   margin: bottom 15px;
 }
-h3 {text-indent: 50px;}
+
 
 h5 {text-indent: 50px;}
-
-h1 {text-indent: 50px;}
+h3 {text-indent: 50px;}
 h4 {text-indent: 50px;}
