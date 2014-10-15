@@ -29,13 +29,6 @@
   text-align: center;
 }
 
-h2 {
-  background: #CC66FF;
-  font-family: "Comic sans MS";
-  text-align: center;
-
-}
-
 body {
   font-family: "Courier";
   text-align: left;
@@ -60,4 +53,13 @@ blockquote {
   text-align: left;
   font-size:90%;
   font-family:verdana;
+}
+
+.panel-body {
+  min-height: 100px;
+}
+
+.image {
+
+  margin: bottom 15px;
 }
