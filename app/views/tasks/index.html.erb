@@ -23,9 +23,9 @@
       <tr>
         <td><%= task.description %></td>
 
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><button type="button" class="btn btn-info pull-right"><%= link_to 'Show', task %></button></td>
+        <td><button type="button" class="btn btn-info pull-right"><%= link_to 'Edit', edit_task_path(task) %></button></td>
+        <td><button type="button" class="btn btn-info pull-right"><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></button></td>
       </tr>
     <% end %>
   </tbody>
