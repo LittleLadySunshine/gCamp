@@ -2,7 +2,6 @@ class PagesController <ApplicationController
 
   def index
 
-
     quote1 = Quote.new
     quote1.text = '"Keep your eyes on the stars, and your feet on the ground."'
     quote1.author = "Theodore Roosevelt"
