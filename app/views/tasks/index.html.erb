@@ -1,6 +1,6 @@
 
   <h1>Tasks
-    <%= link_to 'Create Task', new_task_path, class: "btn btn-info pull-right bt" %> 
+    <%= link_to 'Create Task', new_task_path, class: "btn btn-info pull-right bt" %>
   </h1><hr>
 
 <table class = "table">
@@ -24,8 +24,8 @@
       <%= link_to 'Edit', edit_task_path(task), class: "btn btn-info bt" %>
       <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger bt" %>
     </td>
-
       </tr>
+    </div>
     <% end %>
   </tbody>
 </table>
