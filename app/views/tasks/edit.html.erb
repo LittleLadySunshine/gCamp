@@ -4,3 +4,8 @@
 
 <%= link_to 'Show', @task %> |
 <%= link_to 'Back', tasks_path %>
+
+<div class="field form-group">
+  <%= f.date_field :due %>"col-md-2" %>
+  <%= f.label(:due) %>
+</div>
