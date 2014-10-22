@@ -1,16 +1,15 @@
 
   <h1>Tasks
-    <%= link_to 'Create Task', new_task_path, class: "btn btn-info pull-right bt" %>
+    <%= link_to 'Create Task', new_task_path, class: "btn btn-info bt" %>
   </h1><hr>
 
-<table class = "table">
+<table class="table">
+
   <thead>
     <tr>
-      <th>Description</th><th>Complete</th>
-      <th>
-        <colspan="3">
-        <col style="width:20%">
-      </th>
+      <th>Description</th>
+      <th>Complete</th>
+      <th>Due</th>
     </tr>
   </thead>
 
@@ -18,12 +17,12 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.description %></td>
-        <td>
-          <div class="btn-toolbar pull-right">
-            <%= link_to 'Show', task, class: "btn btn-success" %>
-            <%= link_to 'Edit', edit_task_path(task), class: "btn btn-info" %>
-            <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
-          </div>
+        <td><%= task.complete %></td>
+        <td><%= task.due_date %></td>
+        <td class="btn-toolbar">
+          <%= link_to 'Show', task, class: "btn btn-success" %>
+          <%= link_to 'Edit', edit_task_path(task), class: "btn btn-info" %>
+          <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
         </td>
       </tr>
     <% end %>
