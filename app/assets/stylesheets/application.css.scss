@@ -16,13 +16,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-.topBar {
-  background-color: orange;
-  border: orange;
-  color: black;
-  background-color: black;
 
-}
 
 .jumbotron {
   background-color: gray;
@@ -69,5 +63,9 @@ blockquote {
 }
 
 .header {
+  text-align: center;
+}
+
+.alert {
   text-align: center;
 }

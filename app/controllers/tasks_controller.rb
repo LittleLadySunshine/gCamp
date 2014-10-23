@@ -39,6 +39,7 @@ class TasksController < ApplicationController
     end
   end
 
+
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
@@ -72,6 +73,5 @@ class TasksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:description, :complete, :due_date)
-
+      end
     end
-end
