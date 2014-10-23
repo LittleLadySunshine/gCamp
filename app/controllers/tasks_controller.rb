@@ -6,8 +6,13 @@ class TasksController < ApplicationController
 
 
   def index
-    @tasks = Task.all
+    if params[:sort_by] == 'complete'
+      @task = Task.where(:complete => false)
+    else
+      @task = Task.all
+    end
   end
+
 
   # GET /tasks/1
   # GET /tasks/1.json

@@ -13,10 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
+.btn.pull-right {
+  margin-left: 20px;
+}
 
 .jumbotron {
   background-color: gray;
@@ -68,4 +72,8 @@ blockquote {
 
 .alert {
   text-align: center;
+}
+
+h5.text-right{
+  display: inline;
 }
