@@ -4,9 +4,10 @@ Rails.application.routes.draw do
 
   root to: "pages#index"
 get "/home" => "pages#index", as: :home
-get "/About" => "pages#about", as: :about
-get "/Terms" => "pages#terms", as: :terms
+get "/about" => "pages#about", as: :about
+get "/terms" => "pages#terms", as: :terms
 get "/faqs" => "pages#faqs", as: :faqs
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
