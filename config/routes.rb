@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
 
   resources :tasks
+  resources :users
 
   root to: "pages#index"
 get "/home" => "pages#index", as: :home
 get "/about" => "pages#about", as: :about
 get "/terms" => "pages#terms", as: :terms
 get "/faqs" => "pages#faqs", as: :faqs
-get "/users" => "users#new", as: :users
+get "/users" => "users#index", as: :users
+
 
 
 
