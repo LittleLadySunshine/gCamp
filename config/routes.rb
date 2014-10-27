@@ -7,6 +7,7 @@ get "/home" => "pages#index", as: :home
 get "/about" => "pages#about", as: :about
 get "/terms" => "pages#terms", as: :terms
 get "/faqs" => "pages#faqs", as: :faqs
+get "/users" => "users#new", as: :users
 
 
 
