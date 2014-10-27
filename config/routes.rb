@@ -4,14 +4,10 @@ Rails.application.routes.draw do
   resources :users
 
   root to: "pages#index"
-get "/home" => "pages#index", as: :home
-get "/about" => "pages#about", as: :about
-get "/terms" => "pages#terms", as: :terms
-get "/faqs" => "pages#faqs", as: :faqs
-get "/users" => "users#index", as: :users
-
-
-
+  get "/home" => "pages#index", as: :home
+  get "/about" => "pages#about", as: :about
+  get "/terms" => "pages#terms", as: :terms
+  get "/faqs" => "pages#faqs", as: :faqs
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
