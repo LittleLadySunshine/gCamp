@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 # GET /tasks/1
 # GET /tasks/1.json
   def show
+    @user = User.find(params[:id])
   end
 
 # GET /tasks/new
@@ -57,10 +58,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @task.destroy
+    @user = User.find(params[:id])
+    @user.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to users_path, notice: 'Task was successfully destroyed.' }
+      # format.json { head :no_content }
     end
   end
 end

@@ -3,9 +3,9 @@
 </div>
 
 <div class= "container_buttons pull-right">
-    <%= link_to_unless_current 'All Tasks', tasks_path(sort_by: 'task')%> |
-    <%= link_to_unless_current 'Incomplete Tasks', tasks_path(sort_by: 'complete')%>
-    <%= link_to_unless_current 'Create Task', new_task_path, class: "btn btn-info" %>
+    <%= link_to_unless_current 'All Tasks', tasks_path(all_tasks: 'All tasks')%> |
+    <%= link_to_if(@boo, 'Incomplete Tasks', tasks_path(incomplete: "Incomplete"))%> |
+    <%= link_to 'Create Task', new_task_path, class: "btn btn-info" %>
 </div>
 
 
@@ -21,7 +21,7 @@
   </thead>
 
   <tbody>
-    <% @task.each do |task| %>
+    <% @tasks.each do |task| %>
       <tr>
         <td><%= task.description %></td>
         <td><%= task.complete %></td>

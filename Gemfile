@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem "pg"
 group :production do
-  gem "rails_12factor"
+  gem 'rails_12factor', group: :production
 end
 
 gem 'bootstrap-sass', '~> 3.2.0'

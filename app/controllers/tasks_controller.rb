@@ -6,11 +6,15 @@ class TasksController < ApplicationController
 
 
   def index
-    if params[:sort_by] == 'complete'
-      @task = Task.where(:complete => false)
-    else
-      @task = Task.all
-    end
+    @tasks = Task.where(complete: false)
+    @boo = false
+      if params[:all_tasks]
+        @tasks = Task.all
+        @boo = true
+      elsif params[:incomplete]
+        @tasks = Task.where(complete: false)
+        @boo = false
+      end
   end
 
 
