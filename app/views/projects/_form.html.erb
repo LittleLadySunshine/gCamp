@@ -1,0 +1,31 @@
+<%= form_for(@project, html: {class: "form-horizontal"}) do |p| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@project.errors.count, "error") %>
+        prohibited this task from being saved:
+      </h2>
+      <ul>
+        <% @project.errors.full_messages.each do |message| %>
+          <li>
+            <%= message %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+        <%= p.label :name, class: "col-sm-2 control-label" %>
+      <div class="col-sm-5">
+        <%= p.text_field :name, class: "form-control" %>
+      </div>
+  </div>
+
+  <div class="actions form-group">
+     <div class="col-sm-offset-2 col-sm-10">
+       <%= p.submit class: "btn btn-primary" %>
+     </div>
+  </div>
+
+<% end %>

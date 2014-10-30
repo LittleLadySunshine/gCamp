@@ -1,0 +1,9 @@
+<div class= "container_buttons pull-right">
+    <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" %>
+    <%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' },
+    :class => "btn btn-danger " %>
+</div>
+
+<h3><strong><%= @project.name %></strong></h3>
+
+  <br>
