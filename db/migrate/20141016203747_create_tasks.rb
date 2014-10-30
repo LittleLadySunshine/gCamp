@@ -1,8 +1,9 @@
 class CreateTasks < ActiveRecord::Migration
   def change
-    create_column :tasks do |t|
+    create_table :tasks do |t|
       t.string :description
 
 
     end
+  end
 end

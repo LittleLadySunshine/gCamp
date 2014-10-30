@@ -21,11 +21,9 @@ ActiveRecord::Schema.define(version: 20141030190957) do
   end
 
   create_table "tasks", force: true do |t|
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "complete",    default: false
-    t.date     "due_date"
+    t.string  "description"
+    t.boolean "complete",    default: false
+    t.date    "due_date"
   end
 
   create_table "users", force: true do |t|
