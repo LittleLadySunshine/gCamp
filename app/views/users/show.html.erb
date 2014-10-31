@@ -1,12 +1,11 @@
-<div class="container">
-  <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary pull-right" %> </h4>
+<h4><%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary pull-right" %> </h4>
 
-  <h3>
-  <p><strong><%= @user.first_name + " " + @user.last_name %></strong></p>
 
-  <br>
 
-  <h4>
-  <p><%= @user.first_name %></p>
-  <p><%= @user.last_name %></p>
-  <p><%= @user.email %></p>
+  <p><h3><strong><%= @user.first_name + " " + @user.last_name %></h3></strong></p>
+  <p><strong>First Name:</strong>
+    <%= @user.first_name %></p>
+  <p><strong>Last Name:</strong>
+    <%= @user.last_name %></p>
+  <p><strong>Email:</strong>
+    <%= @user.email %></p>

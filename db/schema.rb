@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20141030190957) do
 
   create_table "tasks", force: true do |t|
     t.string  "description"
-    t.boolean "complete",    default: false
+    t.boolean "complete",    default: false, null: false
     t.date    "due_date"
   end
 
