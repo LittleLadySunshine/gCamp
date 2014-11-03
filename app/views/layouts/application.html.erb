@@ -10,20 +10,18 @@
 <body>
 <div class="navbar navbar-inverse" role="navigation">
   <div class="container">
+    <div class="pull-right">
+    <% if current_user %>
+      <%= link_to "Sign Out", signout_path %>
+    <% else %>
+      <%= link_to "Sign Up", signup_path %>
+      |
+      <%= link_to "Sign In", signin_path %>
+    <% end %>
+  </div>  
     <div class="navbar-header">
 
       <%= link_to "gCamp", root_path, class: "navbar-brand" %>
-
-      <div class "container" pull-right>
-      <% if current_user %>
-        <%= link_to "Sign Out", signout_path %>
-      <% else %>
-        <%= link_to "Sign Up", signup_path %>
-        |
-        <%= link_to "Sign In", signin_path %>
-      <% end %>
-      </div>
-
     </div>
   </div><!--/.navbar-collapse -->
 </div>
