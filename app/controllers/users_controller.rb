@@ -49,10 +49,11 @@ class UsersController < ApplicationController
     end
   end
 
+
+
+
   def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password,
-      :password_confirmation)
-  end
+      params.require(:user).permit(:first_name, :last_name, :email)
 
   def set_user
     @user = User.find(params[:id])
@@ -65,5 +66,6 @@ class UsersController < ApplicationController
       format.html { redirect_to users_path, notice: 'Task was successfully destroyed.' }
       # format.json { head :no_content }
     end
+  end
   end
 end
