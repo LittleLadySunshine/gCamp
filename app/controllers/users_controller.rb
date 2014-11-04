@@ -24,7 +24,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(params.require(:user).permit(:last_name, :email, :password,
+        :password_confirmation))
         format.html { redirect_to users_path, notice: 'Task was successfully updated.' }
         format.json { render :index, status: :ok, location: @user }
       else
