@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     respond_to do |format|
-      if @user.update(params.require(:user).permit(:last_name, :email, :password,
+      if @user.update(params.require(:user).permit(:first_name, :last_name, :email, :password,
         :password_confirmation))
         format.html { redirect_to users_path, notice: 'Task was successfully updated.' }
         format.json { render :index, status: :ok, location: @user }
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 # POST /tasks
 # POST /tasks.json
   def create
-    @user = User.new(params.require(:user).permit(:last_name, :email, :password, :password_confirmation))
+    @user = User.new(params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation))
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: 'User was successfully created.' }
