@@ -2,41 +2,43 @@
   <h1>Sign Up for gCamp!</h1>
 </div>
 
-<div class="well">
-    <%= form_for @user, url: signup_path do |f| %>
+<div class="row">
+    <div class="well col-sm-offset-3 col-sm-6">
+        <%= form_for @user, url: signup_path do |f| %>
 
-      <% if @user.errors.present? %>
-        <ul>
-          <% @user.errors.full_messages.each do |message| %>
-          <p><%= message %></p>
+          <% if @user.errors.present? %>
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+              <p><%= message %></p>
+              <% end %>
+            </ul>
           <% end %>
-        </ul>
-      <% end %>
 
-      <div>
-        <%= f.label :email %>
-      </div>
-      <div>
-        <%= f.email_field :email %>
-      </div>
+          <div>
+            <%= f.label :email %>
+          </div>
+          <div>
+            <%= f.email_field :email %>
+          </div>
 
-      <div>
-        <%= f.label :password %>
-      </div>
-      <div>
-        <%= f.password_field :password %>
-      </div>
+          <div>
+            <%= f.label :password %>
+          </div>
+          <div>
+            <%= f.password_field :password %>
+          </div>
 
-      <div>
-        <%= f.label :password_confirmation %>
-      </div>
-      <div>
-        <%= f.password_field :password_confirmation %>
-      </div>
-<br>
-      <div>
-        <%= f.submit "Sign up" %>
-      </div>
+          <div>
+            <%= f.label :password_confirmation %>
+          </div>
+          <div>
+            <%= f.password_field :password_confirmation %>
+          </div>
+    <br>
+          <div>
+            <%= f.submit "Sign up" %>
+          </div>
 
-    <% end %>
+        <% end %>
+    </div>
 </div>
