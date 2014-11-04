@@ -10,6 +10,8 @@ class RegistrationsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path
     else
+      signup_up_error = "Email cannot be blank / Password confirmation doesn't match password
+      / Password cannot be blank"
       render :new
     end
   end
