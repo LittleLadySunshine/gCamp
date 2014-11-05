@@ -7,7 +7,7 @@
           <% if @user.errors.present? %>
             <ul>
               <% @user.errors.full_messages.each do |message| %>
-              <p><%= message %></p>
+              <p style="color:red"><%= message %></p>
               <% end %>
             </ul>
           <% end %>
@@ -47,10 +47,10 @@
             <%= f.password_field :password_confirmation %>
           </div>
     <br>
-          <div>
-            <%= f.submit "Sign up" %>
-          </div>
-    </div>
+              <div>
+               <%= f.submit class: "btn btn-primary" %>
+             </div>
+        </div>
 </div>
 
 <% end %>

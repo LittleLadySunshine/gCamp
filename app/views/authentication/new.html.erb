@@ -7,7 +7,7 @@
       <%= form_for signin_path do |f| %>
 
     <% if @sign_in_error %>
-      <p = style "color :red">
+    <p style="color:red">
         <%= @sign_in_error %>
       </p>
     <% end %>
@@ -29,7 +29,7 @@
       </div>
     <br>
       <div>
-        <%= f.submit "Sign in" %>
+        <%= f.submit "Sign in", class: "btn btn-primary" %>
       </div>
   </div>
 </div>
