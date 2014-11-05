@@ -3,7 +3,7 @@
 <%= form_tag signin_path do |f| %>
 
   <% if @sign_in_error %>
-    <p>
+    <p = style "color:red">
       <%= @sign_in_error %>
     </p>
   <% end %>

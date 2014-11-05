@@ -1,29 +1,31 @@
-<div class="header">
-  <h1>Sign In</h1>
-</div>
+<!-- <div class="header">
+
+</div> -->
 
 <div class="row">
     <div class="well col-md-offset-4 col-md-4">
       <%= form_for signin_path do |f| %>
 
     <% if @sign_in_error %>
-      <p>
+      <p = style "color :red">
         <%= @sign_in_error %>
       </p>
     <% end %>
 
+ <h1 class="text-center">Sign In</h1>
+
       <div>
-        <%= f.label :email %>
+        <%= label_tag :email, nil, class: "control-label" %>
       </div>
       <div>
-        <%= f.email_field :email, class: "form-control" %>
+        <%= email_field_tag :email, nil, class: "form-control" %>
       </div>
 
       <div>
-        <%= f.label :password %>
+        <%= label_tag :password, nil, class: "control-label" %>
       </div>
       <div>
-        <%= f.password_field :password, class: "form-control" %>
+        <%= password_field_tag :password, nil, class: "form-control" %>
       </div>
     <br>
       <div>
