@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         :password,
         :password_confirmation)
         )
-        format.html { redirect_to users_path, notice: 
+        format.html { redirect_to users_path, notice:
           'Task was successfully updated.' }
         format.json { render :index, status: :ok, location: @user }
       else
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_path, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to users_path, notice: 'User was successfully destroyed.' }
       # format.json { head :no_content }
     end
   end
