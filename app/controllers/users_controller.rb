@@ -32,7 +32,7 @@ class UsersController < ApplicationController
         :password_confirmation)
         )
         format.html { redirect_to users_path, notice:
-          'Task was successfully updated.' }
+          'User was successfully updated.' }
         format.json { render :index, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -67,7 +67,13 @@ class UsersController < ApplicationController
 
 
   def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      params.require(:user).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :password,
+      :password_confirmation
+      )
     end
 
 
