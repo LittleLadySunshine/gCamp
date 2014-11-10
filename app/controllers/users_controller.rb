@@ -52,7 +52,8 @@ class UsersController < ApplicationController
       :password_confirmation)
       )
     respond_to do |format|
-      if @user.save
+      if @user.valid?
+        @user.save
         format.html { redirect_to users_path, notice:
           'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
