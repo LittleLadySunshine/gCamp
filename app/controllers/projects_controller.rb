@@ -37,7 +37,7 @@ class ProjectsController < ApplicationController
     project_params = params.require(:project).permit(:name)
     @project = Project.find(params[:id])
     if @project.update(project_params)
-      redirect_to @project, notice "Project was succesfully edited"
+      redirect_to @project, notice: "Project was succesfully edited"
     else
       render :edit
     end
