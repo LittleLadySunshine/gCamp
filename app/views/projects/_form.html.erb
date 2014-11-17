@@ -1,26 +1,17 @@
-<%= form_for @project, html: {class: "form-horizontal"} do |f| %>
-<% if @project.errors.present? %>
-    <ul>
-      <div class= "alert alert-danger"
-        <% @project.errors.full_messages.each do |message| %>
-          <p style="color:red"><%= message %></p>
-          <% end %>
+<div class="container">
+  <div class="page-header">
+    <h1>
+      <%= title %>
+    </h1>
+  </div>
+  <%= render "shared/errors", source: @project %>
+  <%= form_for @project, :html => {:class => 'form-horizontal'} do |f| %>
+    <div class="form-group">
+      <%= f.label :name, :class => "col-md-1 control-label editform" %>
+      <div class="col-md-4">
+        <%= f.text_field :name, :class => "form-control" %>
       </div>
-    </ul>
+    </div>
+    <%= f.submit "#{button}", :class => "btn btn-primary col-md-offset-1" %>
   <% end %>
-
-
-  <div class="form-group">
-        <%= f.label :name, class: "col-sm-2 control-label" %>
-      <div class="col-sm-5">
-        <%= f.text_field :name, class: "form-control" %>
-      </div>
-  </div>
-
-  <div class="actions form-group">
-     <div class="col-sm-offset-2 col-sm-10">
-       <%= f.submit class: "btn btn-primary" %>
-     </div>
-  </div>
-
-<% end %>
+</div>

@@ -1,17 +1,26 @@
-<div class= "container_buttons pull-right">
-    <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" %>
-    <%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' },
-    :class => "btn btn-danger " %>
+<div class="container">
+  <%= link_to "Destroy", @project, :class => "btn btn-danger pull-right new-task" ,
+      :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+  <%= link_to "Edit", edit_project_path(@project),
+      :class => "btn btn-primary pull-right new-task" %>
+
+
+
+  <h1>
+    <%= @project.name %>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%= link_to "Projects", projects_path %>
+    </li>
+    <li class="active">
+      <%= @project.name %>
+    </li>
+  </ol>
+
+  <% if @project.tasks.count == 1 %>
+    <%= link_to "#{@project.tasks.count} Task", project_tasks_path(@project) %>
+  <% else %>
+    <%= link_to "#{@project.tasks.count} Tasks", project_tasks_path(@project) %>
+  <% end %>
 </div>
-
-<h3><strong><%= @project.name %></strong></h3>
-
-
-<ol class="breadcrumb">
-  <li>
-    <%= link_to "Projects", projects_path %>
-  </li>
-</ol>
-
-
-<%= link_to "Tasks", project_task_path %>
