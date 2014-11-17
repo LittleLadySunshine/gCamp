@@ -3,9 +3,9 @@
 </div>
 
 <div class= "container_buttons pull-right">
-    <%= link_to_unless_current 'All Tasks', tasks_path(all_tasks: 'All tasks')%> |
-    <%= link_to_if(@boo, 'Incomplete Tasks', tasks_path(incomplete: "Incomplete"))%> |
-    <%= link_to 'Create Task', new_task_path, class: "btn btn-info" %>
+    <%= link_to_unless_current 'All Tasks', project_tasks_path(all_tasks: 'All tasks')%> |
+    <%= link_to_if(@boo, 'Incomplete Tasks', project_tasks_path(incomplete: "Incomplete"))%> |
+    <%= link_to 'Create Task', new_project_task_path, class: "btn btn-info" %>
 </div>
 
 
@@ -28,10 +28,12 @@
         <td><%= task.due_date %></td>
       <td>
 <div class= "container_buttons pull-right">
-          <%= link_to 'Show', task, class: "btn btn-success" %>
-          <%= link_to 'Edit', edit_task_path(task), class: "btn btn-info" %>
-          <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' },
+          <%= link_to 'Show', project_task_path(@project, task), class: "btn btn-success" %>
+          <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-info" %>
+          <%= link_to 'Destroy', project_task_path(@project, task),
+            method: :delete, data: { confirm: 'Are you sure?' },
             :class => "btn btn-danger " %>
+
         </td>
       </tr>
 </div>
