@@ -1,4 +1,8 @@
 class TasksController < ApplicationController
+  before_action do
+      @project = Project.find(params[:idl])
+    end
+
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks
@@ -6,13 +10,13 @@ class TasksController < ApplicationController
 
 
   def index
-    @tasks = Task.where(complete: false)
+    @tasks = @project.tasks.where(complete: false)
     @boo = false
       if params[:all_tasks]
         @tasks = Task.all
         @boo = true
       elsif params[:incomplete]
-        @tasks = Task.where(complete: false)
+        @tasks = @project.tasks.where(complete: false)
         @boo = false
       end
   end
@@ -25,7 +29,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @task = @project.tasks.new
   end
 
   # GET /tasks/1/edit
@@ -54,7 +58,7 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task  }
+        format.html { redirect_to project_task_path(@project, @task)  }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit }
@@ -76,7 +80,7 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @task = project.task.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

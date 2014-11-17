@@ -5,3 +5,13 @@
 </div>
 
 <h3><strong><%= @project.name %></strong></h3>
+
+
+<ol class="breadcrumb">
+  <li>
+    <%= link_to "Projects", projects_path %>
+  </li>
+</ol>
+
+
+<%= link_to "Tasks", project_task_path %>
