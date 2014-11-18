@@ -1,6 +1,7 @@
 class Registration < ActiveRecord::Base
 
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :first_name, presence: true, :last_name, presence: true
+   :email, presence: true, uniqueness: { case_sensitive: false }
   has_secure_password
 
 end

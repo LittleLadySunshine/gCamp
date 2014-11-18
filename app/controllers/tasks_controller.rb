@@ -36,7 +36,8 @@ class TasksController < ApplicationController
   def create
     @task = @project.tasks.new(task_params)
     if @task.save
-      redirect_to project_task_path(@project, @task), notice: 'Task was successfully created.'
+      redirect_to project_task_path(@project, @task),
+      notice: 'Task was successfully created.'
     else
       render :new
     end
@@ -46,7 +47,8 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
     if @task.update(task_params)
-      redirect_to project_task_path(@project, @task), notice: 'Task was successfully updated.'
+      redirect_to project_task_path(@project, @task),
+      notice: 'Task was successfully updated.'
     else
       render :edit
     end
@@ -65,7 +67,6 @@ class TasksController < ApplicationController
       @task = @project.tasks.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:description, :complete, :due_date)
     end
