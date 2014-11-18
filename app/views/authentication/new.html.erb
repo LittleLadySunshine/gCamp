@@ -2,17 +2,19 @@
 
 </div> -->
 
-<div class="row">
-    <div class="well col-md-offset-4 col-md-4">
-      <%= form_for signin_path do |f| %>
 
-    <% if @sign_in_error %>
-    <p style="color:red">
-        <%= @sign_in_error %>
-      </p>
-    <% end %>
 
- <h1 class="text-center">Sign In</h1>
+ <div class="row">
+     <div class="well col-md-offset-4 col-md-4">
+       <h1 class="text-center">Sign In</h1>
+
+       <%= form_for signin_path do |f| %>
+
+     <% if @sign_in_error %>
+     <p style="color:red">
+         <%= @sign_in_error %>
+       </p>
+     <% end %>
 
       <div>
         <%= label_tag :email, nil, class: "control-label" %>
