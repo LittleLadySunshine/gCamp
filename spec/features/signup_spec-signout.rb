@@ -2,7 +2,8 @@ require 'rails_helper'
 
   feature "signup" do
   background do
-    User.create(:first_name => 'Aaron', :last_name => 'Gray', :email => 'aaron@example.com', :password => 'caplin')
+    User.create(:first_name => 'Aaron', :last_name => 'Gray',
+      :email => 'aaron@example.com', :password => 'caplin')
   end
 
   scenario "checks successful signup" do

@@ -4,7 +4,6 @@
       <%= title %>
     </h1>
   </div>
-  <%= render "shared/errors", source: @project %>
   <%= form_for @project, :html => {:class => 'form-horizontal'} do |f| %>
     <div class="form-group">
       <%= f.label :name, :class => "col-md-1 control-label editform" %>
@@ -12,6 +11,6 @@
         <%= f.text_field :name, :class => "form-control" %>
       </div>
     </div>
-    <%= f.submit "#{button}", :class => "btn btn-primary col-md-offset-1" %>
+    <%= f.submit , :class => "btn btn-primary col-md-offset-1" %>
   <% end %>
 </div>
