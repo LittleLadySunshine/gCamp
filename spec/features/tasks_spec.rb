@@ -20,13 +20,15 @@ feature "Tasks" do
 
   scenario "User edits a Task" do
     visit projects_path
-    expect(page).to have_content("My awesome task")
     click_on "My awesome task"
+    click_on "1 Task"
     click_on "Edit"
-    click_on "Create Task"
-    fill_in "Description", with: "My awesome tasks"
-    fill_in "Due date", with: "11/01/14"
-    click_on "Create Task"
+    fill_in "Description", with: "my aweeesome task"
+    fill_in "Due date", with: "12/31/15"
+    click_on "Update Task"
+
+    expect(page).to have_content("my aweeesome task")
+  end
   #
   #
   #   expect(page).to have_content("My awesome task")
