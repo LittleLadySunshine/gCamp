@@ -14,17 +14,19 @@ feature "Tasks" do
     fill_in "Due date", with: "12/31/2014"
     click_on "Create Task"
 
+    expect(page).to have_content("My awesome task")
     expect(page).to have_content("Task was successfully created.")
   end
-  #
-  # scenario "User edits a Task" do
-  #   visit project_path
-  #   # expect(page).to have_content("My awesome task")
-  #   expect(page).to have_no_content("My awesome task")
-  #   click_on "Create Task"
-  #   fill_in "Description", with: "My awesome tasks"
-  #   fill_in "Due date", with: "11/01/14"
-  #   click_on "Create Task"
+
+  scenario "User edits a Task" do
+    visit projects_path
+    expect(page).to have_content("My awesome task")
+    click_on "My awesome task"
+    click_on "Edit"
+    click_on "Create Task"
+    fill_in "Description", with: "My awesome tasks"
+    fill_in "Due date", with: "11/01/14"
+    click_on "Create Task"
   #
   #
   #   expect(page).to have_content("My awesome task")
