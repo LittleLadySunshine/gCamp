@@ -20,7 +20,7 @@ feature "Tasks" do
 
   scenario "User edits a Task" do
     visit projects_path
-    click_on "My awesome task"
+    click_on "new project"
     click_on "1 Task"
     click_on "Edit"
     fill_in "Description", with: "my aweeesome task"
