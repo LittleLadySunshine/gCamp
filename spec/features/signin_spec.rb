@@ -2,7 +2,8 @@ require 'rails_helper'
 
 feature "signup" do
   background do
-    User.create(:first_name => 'Aaron', :last_name => 'Gray', :email => 'aaron@example.com', :password => 'caplin')
+    User.create(:first_name => 'Aaron', :last_name => 'Gray',
+    :email => 'aaron@example.com', :password => 'caplin')
   end
 
   scenario "creates a user" do
@@ -49,5 +50,14 @@ feature "signup" do
     expect(page).to have_content("Scuby")
     expect(page).to have_content("Dud")
     expect(page).to have_content("ScubyDud@example.com")
+  end
+
+    scenario "signing in with invalid credentials" do
+    visit '/sign-in'
+    expect(page).to have_content("Sign In")
+      fill_in "Email", with: " "
+      fill_in "Password", with: " "
+      click_on "Sign in"
+    expect(page).to have_content("Username / password combination is invalid")
   end
 end
