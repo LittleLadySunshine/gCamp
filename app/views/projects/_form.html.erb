@@ -1,3 +1,15 @@
+<%= form_for @project, html: {class: "form-horizontal"} do |f| %>
+<% if @project.errors.present? %>
+    <ul>
+      <div class= "alert alert-danger"
+        <% @project.errors.full_messages.each do |message| %>
+          <p style="color:red"><%= message %></p>
+          <% end %>
+      </div>
+    </ul>
+  <% end %>
+
+
 <div class="container">
   <div class="page-header">
     <h1>
@@ -11,6 +23,7 @@
         <%= f.text_field :name, :class => "form-control" %>
       </div>
     </div>
-    <%= f.submit, :class => "btn btn-primary col-md-offset-1" %>
-  <% end %>
+    <%= f.submit :class => "btn btn-primary col-md-offset-1" %>
 </div>
+<% end %>
+<% end %>
