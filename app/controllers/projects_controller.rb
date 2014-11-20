@@ -18,11 +18,11 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    set_project
+    @project = Project.find(params[:id])
   end
 
   def show
-    set_project
+    @project = Project.find(params[:id])
   end
 
   def update
