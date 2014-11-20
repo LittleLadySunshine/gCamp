@@ -1,12 +1,22 @@
-class MembershipController < ApplicationController
+class MembershipsController < ApplicationController
   before_action do
     @project = Project.find(params[:project_id])
   end
 
-
   def index
     @membership = @project.memberships.new
     @memberships = @project.memberships.all
+  end
+
+  def create
+    @membership = @project.memberships.new(membership_params)
+    if @membership.save
+      redirect_to project_memberships_path(@project, @membership),
+      notice: "#{@membership.user.full_name} was successfully created."
+    else
+      @memberships = @project.memberships.all
+      render :index
+    end
   end
 
   def show
@@ -20,18 +30,6 @@ class MembershipController < ApplicationController
 
   def edit
     @membership = @project.memberships.find(params[:id])
-  end
-
-
-  def create
-    @membership = @project.memberships.new(membership_params)
-    if @membership.save
-      redirect_to project_memberships_path(@project, @membership),
-      notice: "#{@membership.user.full_name} was successfully created."
-    else
-      @memberships = @project.memberships.all
-      render :index
-    end
   end
 
   def update
@@ -59,6 +57,5 @@ class MembershipController < ApplicationController
     params.require(:membership).permit(:role, :user_id, :project_id)
   end
 
- end
 
 end
