@@ -19,9 +19,18 @@ feature "Tasks" do
   end
 
   scenario "User edits a Task" do
+    project = Project.create!(
+      name: "new project"
+    )
+    task = Task.create!(
+      project: project,
+      description: "new task"
+    )
     visit projects_path
-    click_on "new project"
+    click_on project.name
+    save_and_open_page
     click_on "1 Task"
+    expect(page).to have_content(task.description)
     click_on "Edit"
     fill_in "Description", with: "my aweeesome task"
     fill_in "Due date", with: "12/31/15"
