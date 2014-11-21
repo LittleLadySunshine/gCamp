@@ -1,11 +1,10 @@
-
 <h1><%= "My Project: #{@project.name}"%></h1>
 
 
 <ol class="breadcrumb">
-  <li><%=link_to "Projects", projects_path%></li>
-  <li><%= link_to " #{@project.name}", projects_path %></li>
-  <li>Tasks</li>
-</ol>
+    <li><%=link_to "Projects", projects_path%></li>
+    <li><%= link_to " #{@project.name}", projects_path() %></li>
+    <li>Tasks</li>
+  </ol>
 
-<%= render "form" %>
+  <%= render "form" %>
