@@ -22,20 +22,24 @@
 
   <tbody>
     <% @tasks.each do |task| %>
-      <tr>
-        <td><%= link_to "task.description", project_task_path(@project, task)  %></td>
-        <td><%= task.complete %></td>
-        <td><%= task.due_date %></td>
-      <td>
-<div class= "container_buttons pull-right">
-          <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-info" %>
-          <%= link_to 'Destroy', project_task_path(@project, task),
-            method: :delete, data: { confirm: 'Are you sure?' },
-            :class => "btn btn-danger " %>
+    <tr>
+      <td><%= link_to "task.description", project_task_path(@project, task)  %></td>
+      <% if task.complete.to_s == "true" %>
+      <td><span class="glyphicon glyphicon-ok"></span></td>
+      <% else %>
+      <td><span class='glyphicon glyphicon-minus'></span></td>
+      <% end %>
 
-        </td>
-      </tr>
-</div>
-    <% end %>
+      <td><%= task.due_date ? task.due_date.to_formatted_s(:long) : task.due_date %></td>
+      <td class="text-right">
+        <%= link_to 'Show', project_task_path(@project, task), class: 'btn btn-success' %>
+        <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-info" %>
+        <%= link_to 'Destroy', project_task_path(@project, task),
+        method: :delete,
+        data: { confirm: 'Are you sure?' },
+        class: 'btn btn-danger' %>
+        <% end %>
+      </td>
+    </tr>
   </tbody>
 </table>
