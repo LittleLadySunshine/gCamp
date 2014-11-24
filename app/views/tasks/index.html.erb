@@ -33,10 +33,10 @@
       <td class="text-right">
         <%= link_to 'Show', project_task_path(@project, task), class: 'btn btn-success' %>
         <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-info" %>
-        <%= link_to 'Destroy', project_task_path(@project, task),
+        <%= link_to '', project_task_path(@project, task),
         method: :delete,
         data: { confirm: 'Are you sure?' },
-        class: 'btn btn-danger' %>
+        class: 'glyphicon glyphicon-remove red' %>
         <% end %>
       </td>
     </tr>
