@@ -10,6 +10,7 @@
 <body>
 <div class="navbar navbar-inverse" role="navigation">
   <div class="container">
+    <%= link_to "gCamp", root_path, class: "navbar-brand" %>
     <ul class= "nav navbar-nav navbar-right">
     <% if current_user %>
       <li><%= link_to "#{current_user.first_name} #{current_user.last_name}", user_path(current_user) %></li>
@@ -19,10 +20,6 @@
       <li><%= link_to "Sign In", signin_path %></li>
     <% end %>
     </ul>
-  </div>
-    <div class="gcamp-header">
-
-      <%= link_to "gCamp", root_path, class: "navbar-brand" %>
     </div>
   </div>
 </div>
