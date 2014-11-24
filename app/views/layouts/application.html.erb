@@ -32,13 +32,10 @@
     </div>
   <% end %>
 </div>
-<div class="container">
 
-
-<%= yield %>
-
-  <hr>
-  <footer class="page-footer" style="width 1140px">
+<footer class="page-footer" style="width 1140px">
+  <div class="container">
+      <%= yield %>
     <div class="address">
       <&copy; Denise McCoy 2014><br>
         <a href="mailto:#">Denise.McCoy@gmail.com</a>
@@ -67,8 +64,9 @@
        <% end %>
        <hr>
      </div>
-  </footer>
-</div>
+  </div>
+</footer>
+
 
 </body>
 </html>
