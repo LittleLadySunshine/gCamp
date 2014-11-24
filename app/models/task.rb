@@ -4,13 +4,10 @@ class Task < ActiveRecord::Base
 
   validates :description, presence: true
 
-
-  validate :due_date_valid
-
-  def due_date_valid
-    if due_date.present? && due_date < due_date.current && !id.present?
-      errors.add(:due_date, "must be present or future")
+  validate :not_past_date
+    def not_past_date
+      if due_date.present? && due_date < Date.today
+        errors.add(:due_date, "cannnot be in the past")
     end
   end
-
 end
