@@ -1,13 +1,13 @@
-<div class="col-md-3">
-  <h1>Tasks</h1>
-</div>
-
-<div class= "container_buttons pull-right">
+<div class="page-header">
+  <div class= "container_buttons pull-right">
     <%= link_to_unless_current 'All Tasks', project_tasks_path(all_tasks: 'All tasks')%> |
     <%= link_to_if(@boo, 'Incomplete Tasks', project_tasks_path(incomplete: "Incomplete"))%> |
     <%= link_to 'Create Task', new_project_task_path, class: "btn btn-info" %>
-</div>
+  </div>
 
+
+  <h1>Tasks</h1>
+</div>
 
 <table class="table">
 

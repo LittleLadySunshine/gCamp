@@ -29,14 +29,17 @@
   <% if notice %>
   <div class= "container alert alert-success" role="alert">
     <p id="notice"><%= notice %></p>
-    </div>
+  </div>
   <% end %>
 </div>
 
 
+
+<div class="container">
+
+  <%= yield %>
 <footer class="page-footer" style="width 1140px">
-  <div class="container">
-      <%= yield %>
+
     <div class="address">
       <&copy; Denise McCoy 2014><br>
         <a href="mailto:#">Denise.McCoy@gmail.com</a>

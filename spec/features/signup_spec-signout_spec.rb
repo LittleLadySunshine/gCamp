@@ -18,7 +18,7 @@ require 'rails_helper'
     fill_in "Email", with: "ScoobyDoo.com"
     fill_in "Password", with: "test"
     fill_in "Password confirmation", with: "test"
-    click_on "Create User"
+    click_on "Sign Up!"
     click_on "Sign Out"
     visit users_path
     expect(page).to have_content("Scooby")
@@ -28,22 +28,22 @@ require 'rails_helper'
 
   scenario "checks blank password_and_email" do
     visit users_path
-    click_on "Create User"
+    click_on "Sign Up"
     expect(page).to have_no_content("Email can't be blank")
     expect(page).to have_no_content("Password can't be blank")
-    click_on "Create User"
+    click_on "Sign Up!"
     expect(page).to have_content("Email can't be blank")
     expect(page).to have_content("Password can't be blank")
   end
 
   scenario "checks blank password" do
     visit users_path
-    click_on "Create User"
+    click_on "Sign Up!"
     expect(page).to have_no_content("Password can't be blank")
     fill_in "First name", with: "Scooby"
     fill_in "Last name", with: "Doo"
     fill_in "Email", with: "ScoobyDoo@example.com"
-    click_on "Create User"
+    click_on "Sign Up!"
     expect(page).to have_content("Password can't be blank")
   end
 end
