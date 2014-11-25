@@ -18,7 +18,7 @@
   </ol>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <div  class="col-sm-5 alert alert-danger">
     <h5><%= pluralize(@membership.errors.count, "error") %> prohibited from this form being saved</h5>
     <ul>
@@ -27,7 +27,7 @@
       <% end %>
     </ul>
   </div>
-</div>
+</div> -->
 
 <div class="row">
   <div class="well col-md-5">
@@ -52,7 +52,7 @@
               <%= link_to membership.user.full_name, user_path(membership.user_id) %>
             </td>
             <td>
-              <%= f.collection_select :user_id, User.all, :id, :full_name, {}, {class: "form-control"} %>
+              <%= f.select(:role, options_for_select(["Member","Owner"]),{ }, {class: "form-control"}) %>
             </td>
             <td>
               <%= f.submit "Update", :class => "btn btn-primary" %>
