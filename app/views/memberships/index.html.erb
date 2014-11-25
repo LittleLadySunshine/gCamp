@@ -19,7 +19,7 @@
 </div>
 
 <div class="row">
-  <div  class="col-sm-6 alert alert-danger">
+  <div  class="col-sm-5 alert alert-danger">
     <h5><%= pluralize(@membership.errors.count, "error") %> prohibited from this form being saved</h5>
     <ul>
       <% @membership.errors.full_messages.each do |message| %>
@@ -34,12 +34,13 @@
     <%= form_for [@project, @membership], :html => {:class => 'form-inline'} do |f| %>
       <%= f.collection_select :user_id, User.all, :id, :full_name,
         { include_blank: "Please select a user... "}, {class: "form-control"} %>
-      <%= f.select(:role, ["Owner", "Member"], {class: "form-control"}) %>
+      <%= f.select(:role, options_for_select(["Member","Owner"]),{ }, {class: "form-control"}) %>
       <%= f.submit "Add New Member", :class => "btn btn-primary" %>
-
+      <% end %>
   </div>
-  <% end %>
 </div>
+
+
 
 <div class="row">
   <table class="table-condensed">
