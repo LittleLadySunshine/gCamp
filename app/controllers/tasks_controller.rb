@@ -1,25 +1,21 @@
 class TasksController < ApplicationController
-  before_action do
-    @project = Project.find(params[:project_id])
-  end
-
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
-
-
+  before_action :set_project, only:[:show, :edit, :update, :destroy, :create, :index, :new, :create_comment]
 
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = if params[:sort_by] == 'complete'
-      @project.tasks.where(:complete => false)
-    else
-      @project.tasks.all
+    @tasks = @project.tasks.where(complete: false)
+    if params[:sort] == 'all'
+      @tasks = @project.tasks.all
     end
   end
 
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @task = @project.tasks.find(params[:id])
+    @comment = @task.comments.new
+    @comments = @task.comments.all
   end
 
   # GET /tasks/new
@@ -29,45 +25,77 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    @task = @project.tasks.find(params[:id])
   end
+
+  def create_comment
+    @task = @project.tasks.find(params[:id])
+    if current_user
+      @comment = @task.comments.new(params.require(:comment).merge({:user_id => :current_user.id}).permit(:description, :user_id, :task_id))
+      @comment.save
+      redirect_to project_task_path()
+    else
+      @comment = @task.comments.new
+      @comments = @task.comments.all
+      render :show
+   end
+  end
+
+
 
   # POST /tasks
   # POST /tasks.json
   def create
     @task = @project.tasks.new(task_params)
-    if @task.save
-      redirect_to project_task_path(@project, @task),
-      notice: 'Task was successfully created.'
-    else
-      render :new
+
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to project_tasks_path,
+          notice: 'Task was successfully created.' }
+        format.json { render :show, status: :created, location: @task }
+      else
+        format.html { render :new }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    if @task.update(task_params)
-      redirect_to project_task_path(@project, @task),
-      notice: 'Task was successfully updated.'
-    else
-      render :edit
+    @task = @project.tasks.find(params[:id])
+    respond_to do |format|
+      if @task.update(task_params)
+        format.html { redirect_to project_task_path(@project, @task),
+          notice: 'Task was successfully updated.' }
+        format.json { render :show, status: :ok, location: @task }
+      else
+        format.html { render :edit }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
+    @task = @project.tasks.find(params[:id])
     @task.destroy
-    redirect_to project_tasks_path, notice: 'Task was successfully destroyed.'
+    respond_to do |format|
+      format.html { redirect_to project_tasks_path(@project),
+        notice: 'Task was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = @project.tasks.find(params[:id])
-    end
+  # private
+  # # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
 
-    def task_params
-      params.require(:task).permit(:description, :complete, :due_date)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def task_params
+    params.require(:task).permit(:description, :complete, :date)
+  end
 end

@@ -1,16 +1,25 @@
 <div class="page-header">
-  <div class= "container_buttons pull-right">
-    <%= link_to_unless_current 'All Tasks', project_tasks_path(all_tasks: 'All tasks')%> |
-    <%= link_to_if(@boo, 'Incomplete Tasks', project_tasks_path(incomplete: "Incomplete"))%> |
-    <%= link_to 'Create Task', new_project_task_path, class: "btn btn-info" %>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Tasks for My <%= @project.name %></h1>
+    </div>
+
+  <br>
+  <div class="col-md-3 col-md-offset-3 text-right">
+    <%= link_to_unless (params[:sort] == "all"), 'All', project_tasks_path(sort: "all") %> |
+    <%= link_to_unless (!params[:sort]), 'Incomplete', project_tasks_path %>
+    <%= link_to 'Create Task', new_project_task_path, class: 'btn btn-primary text-right' %>
   </div>
-
-
-  <h1>Tasks</h1>
+  </div>
 </div>
 
-<table class="table">
+<ol class="breadcrumb">
+  <li><%= link_to "Projects", projects_path %></li>
+  <li><%= link_to @project.name, project_path(@project) %></li>
+  <li>Tasks</li>
+</ol>
 
+<table class="table table-stripped">
   <thead>
     <tr>
       <th>Description</th>
@@ -22,7 +31,8 @@
   <tbody>
     <% @tasks.each do |task| %>
     <tr>
-      <td><%= link_to task.description, project_task_path(@project, task)  %></td>
+      <td><%= link_to task.description, project_task_path(@project, task)  %>
+        <span class="badge"><%= task.comments.count.to_s %></span></td>
       <% if task.complete.to_s == "true" %>
       <td><span class="glyphicon glyphicon-ok"></span></td>
       <% else %>
@@ -31,7 +41,6 @@
 
       <td><%= task.due_date ? task.due_date.to_formatted_s(:long) : task.due_date %></td>
       <td class="text-right">
-        <%= link_to 'Show', project_task_path(@project, task), class: 'btn btn-success' %>
         <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-info" %>
         <%= link_to '', project_task_path(@project, task),
         method: :delete,
