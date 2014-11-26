@@ -18,8 +18,10 @@
   </ol>
 </div>
 
-<div class="row">
-  <%= if @membership.errors.any? %>
+
+
+  <div class="row">
+
   <div  class="col-sm-5 alert alert-danger">
     <h5><%= pluralize(@membership.errors.count, "error") %> prohibited from this form being saved</h5>
     <ul>
@@ -28,8 +30,8 @@
     <% end %>
   </ul>
   </div>
-  <% end %>
 </div>
+
 
 <div class="row">
   <div class="well col-md-5">
@@ -57,8 +59,7 @@
         <%= f.submit "Update", :class => "btn btn-primary" %>
       </td>
       <td class="delete">
-        <%= link_to content_tag(:span, " ", class: 'glyphicon glyphicon-remove'),
-        project_membership_path(@project, membership),
+        <%= link_to content_tag(:span, " ", class: 'glyphicon glyphicon-remove'), project_membership_path(@project, membership),
         method: :delete, :data => {:confirm => "Are you sure?"} %>
       </td>
     </tr>
