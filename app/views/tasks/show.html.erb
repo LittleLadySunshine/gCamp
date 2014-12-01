@@ -12,15 +12,20 @@
   <li><%= "Show" %></li>
 </ol>
 <div>
-  <p>
-    <strong>Due:</strong>
-    <%= @task.date ? @task.date.to_formatted_s(:long) : @task.date %>
-  </p>
-  <p>
-    <strong>Complete:</strong>
-    <%= @task.complete.to_s.capitalize %>
-  </p>
-</div>
+
+  <strong>Due Date: </strong>
+  <%if @task.date != nil %>
+  <strong class="textsize"><%= @task.date.strftime("%m/%d/%Y")%></strong>
+  <%else%>
+  <strong class="textsize"><%= @task.date%></strong>
+  <%end%>
+  <br>
+  <strong>Complete: </strong>
+  <strong class="textsize"><%=@task.complete%></strong
+
+    <br>
+    <br>
+
 
 <h2>Comments</h2>
 
