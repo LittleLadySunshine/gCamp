@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action do
+    @project = Project.find(params[:project_id])
+  end
 
   # GET /tasks
   # GET /tasks.json

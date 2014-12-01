@@ -32,8 +32,8 @@
     <% @tasks.each do |task| %>
     <tr>
       <td><%= link_to task.description, project_task_path(@project, task)  %>
-        <span class="badge"><%= task.comments.count.to %></span></td>
-      <% if task.complete.to == "true" %>
+        <p class="badge badge-info"><%= task.comments.count%></p></td>
+      <% if task.complete == "true" %>
       <td><span class="glyphicon glyphicon-ok"></span></td>
       <% else %>
       <td><span class='glyphicon glyphicon-minus'></span></td>

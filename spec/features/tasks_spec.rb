@@ -38,30 +38,30 @@ feature "Tasks" do
 
     expect(page).to have_content("my aweeesome task")
   end
-  #
-  #
-  #   expect(page).to have_content("My awesome task")
-  #   click_on "Edit"
-  #   fill_in "Description", with: "My aweeeesome tasks"
-  #   fill_in "Due date", with: "11/01/14"
-  #   click_on "Update Task"
-  #
-  #   expect(page).to have_content("My aweeeesome tasks")
-  #   expect(page).to have_no_content("My awesome task")
-  # end
-  #
-  # scenario "User destroys a Task" do
-  #   visit project_tasks_path
-  #   # expect(page).to have_content("My awesome task")
-  #   expect(page).to have_no_content("My awesome task")
-  #   click_on "Create Task"
-  #   fill_in "Description", with: "My awesome tasks"
-  #   fill_in "Due date", with: "11/01/14"
-  #   click_on "Create Task"
-  #
-  #
-  #   expect(page).to have_content("My awesome task")
-  #   click_on "Destroy"
-  #   expect(page).to have_no_content("My awesome task")
-  # end
+
+
+    expect(page).to have_content("My awesome task")
+    click_on "Edit"
+    fill_in "Description", with: "My aweeeesome tasks"
+    fill_in "Due date", with: "11/01/15"
+    click_on "Update Task"
+
+    expect(page).to have_content("My aweeeesome tasks")
+    expect(page).to have_no_content("My awesome task")
+  end
+
+  scenario "User destroys a Task" do
+    visit project_tasks_path
+    # expect(page).to have_content("My awesome task")
+    expect(page).to have_no_content("My awesome task")
+    click_on "Create Task"
+    fill_in "Description", with: "My awesome tasks"
+    fill_in "Due date", with: "11/01/15"
+    click_on "Create Task"
+
+
+    expect(page).to have_content("My awesome task")
+    click_on "Destroy"
+    expect(page).to have_no_content("My awesome task")
+  end
 end
