@@ -1,13 +1,9 @@
 <%= form_for [@project, @task], html: {class: "form-horizontal"} do |f| %>
-<% if @task.errors.present? %>
-    <ul>
-      <div class= "alert alert-danger"
-        <% @task.errors.full_messages.each do |message| %>
-          <p style="color:red"><%= message %></p>
-          <% end %>
-      </div>
-    </ul>
-  <% end %>
+  <div class="row form-group">
+    <div class="col-sm-5 tasks">
+      <%= render "shared/errors", object: @task %>
+    </div>
+  </div>
 
 <div class="form-group">
       <%= f.label :description, class: "col-sm-2 control-label" %>
