@@ -26,7 +26,7 @@
 
 <table class="table">
   <tbody>
-    <% @project.memberships.each do |membership| %>
+    <% @memberships.each do |membership| %>
     <tr>
       <%= form_for [@project, membership] do |f| %>
       <td class="col-sm-2">
@@ -48,5 +48,5 @@
     </tr>
     <% end %>
   </tbody>
-</table>le>
+</table>
 </div>
