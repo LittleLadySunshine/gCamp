@@ -32,14 +32,19 @@
     <% @tasks.each do |task| %>
     <tr>
       <td><%= link_to task.description, project_task_path(@project, task)  %>
-        <span class="badge"><%= task.comments.count.to_s %></span></td>
-      <% if task.complete.to_s == "true" %>
+        <span class="badge"><%= task.comments.count.to %></span></td>
+      <% if task.complete.to == "true" %>
       <td><span class="glyphicon glyphicon-ok"></span></td>
       <% else %>
       <td><span class='glyphicon glyphicon-minus'></span></td>
       <% end %>
+      <td>
+        <% if task.due_date %>
+        <%= task.due_date.strftime('%m/%d/%Y') %>
+        <% else nil %>
+        <% end %>
+      </td>
 
-      <td><%= task.due_date ? task.due_date.to_formatted_s(:long) : task.due_date %></td>
       <td class="text-right">
         <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-info" %>
         <%= link_to '', project_task_path(@project, task),
