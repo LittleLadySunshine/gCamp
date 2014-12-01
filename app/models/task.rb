@@ -1,13 +1,15 @@
 class Task < ActiveRecord::Base
 
-  belongs_to :project
-
   validates :description, presence: true
+  validate :due_date_cannot_be_in_the_past, on: :create
 
-  validate :not_past_date
-    def not_past_date
-      if due_date.present? && due_date < Date.today
-        errors.add(:due_date, "cannnot be in the past")
+  def due_date_cannot_be_in_the_past
+    if due_date.present? && due_date < Date.today
+      errors.add(:due_date, "can't be in the past")
     end
   end
+
+  belongs_to :project
+  has_many :comments, dependent: :destroy
+
 end
