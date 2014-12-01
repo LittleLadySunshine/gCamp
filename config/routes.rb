@@ -2,9 +2,13 @@ Rails.application.routes.draw do
 
   resources :comments
   resources :users
+
   resources :projects do
-    resources :tasks
     resources :memberships
+
+  resources :tasks do
+    resources :comments
+  end
   end
 
 

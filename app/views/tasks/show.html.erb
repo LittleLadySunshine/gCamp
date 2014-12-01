@@ -27,36 +27,36 @@
     <br>
 
 
-<h2>Comments</h2>
+    <h2>Comments</h2>
 
-<div class="container">
-  <% @comments.each do |comment| %>
-  <div class="row row-fluid">
-    <div class="col-md-2">
-      <div class="row">
-        <% if comment.user_id == nil %>
-        <%= "deleted user" %>
-        <% else %>
-        <%= link_to comment.user.full_name, user_path(comment.user) %>
-        <% end %>
+    <div class="container">
+      <% @comments.each do |comment| %>
+      <div class="row row-fluid">
+        <div class="col-md-2">
+          <div class="row">
+            <% if comment.user_id == nil %>
+            <%= "deleted user" %>
+            <% else %>
+            <%= link_to comment.user.full_name, user_path(comment.user) %>
+            <% end %>
+          </div>
+          <div class="row">
+            <%= "#{time_ago_in_words(comment.created_at)}" %> ago
+          </div>
+        </div>
+        <div class="col-md-10">
+          <%= comment.description %>
+        </div>
       </div>
-      <div class="row">
-        <%= "#{time_ago_in_words(comment.created_at)}" %> ago
-      </div>
+      <% end %>
+      <br>
     </div>
-    <div class="col-md-10">
-      <%= comment.description %>
-    </div>
-  </div>
-  <br>
-  <% end %>
-</div>
 
-<%= form_for([@comment, @task], html: {:class => "form"}) do |f| %>
-<div class="form-group col-md-10 col-md-offset-2">
-  <%= f.text_area :description, class:"form-control" %>
-</div>
-<div class="form-group col-md-10 col-md-offset-2">
-  <%= f.submit "Add Comment", {class:"btn btn-primary"} %>
-</div>
-<% end %>
+    <%= form_for [@project, @task, @comment], html: {:class => "form"} do |f| %>
+    <div class="form-group col-md-10 col-md-offset-2">
+      <%= f.text_area :description, autofocus: true, class:"form-control" %>
+    </div>
+    <div class="form-group col-md-10 col-md-offset-2">
+      <%= f.submit "Add Comment", {class:"btn btn-primary"} %>
+    </div>
+    <% end %>
