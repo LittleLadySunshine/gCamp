@@ -14,10 +14,10 @@
 <div>
 
   <strong>Due Date: </strong>
-  <%if @task.date != nil %>
-  <strong class="textsize"><%= @task.date.strftime("%m/%d/%Y")%></strong>
+  <%if @task.due_date != nil %>
+  <strong class="textsize"><%= @task.due_date.strftime("%m/%d/%Y")%></strong>
   <%else%>
-  <strong class="textsize"><%= @task.date%></strong>
+  <strong class="textsize"><%= @task.due_date%></strong>
   <%end%>
   <br>
   <strong>Complete: </strong>
@@ -52,7 +52,7 @@
   <% end %>
 </div>
 
-<%= form_for(@comment, url: {:action => "create_comment"}, html: {:class => "form"}) do |f| %>
+<%= form_for([@comment, @task], html: {:class => "form"}) do |f| %>
 <div class="form-group col-md-10 col-md-offset-2">
   <%= f.text_area :description, class:"form-control" %>
 </div>
