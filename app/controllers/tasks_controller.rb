@@ -30,21 +30,6 @@ class TasksController < ApplicationController
     @task = @project.tasks.find(params[:id])
   end
 
-  def create_comment
-    @task = @project.tasks.find(params[:id])
-    if current_user
-      @comment = @task.comments.new(params.require(:comment).merge({:user_id => :current_user.id}).permit(:description, :user_id, :task_id))
-      @comment.save
-      redirect_to project_task_path()
-    else
-      @comment = @task.comments.new
-      @comments = @task.comments.all
-      render :show
-   end
-  end
-
-
-
   # POST /tasks
   # POST /tasks.json
   def create
@@ -92,6 +77,6 @@ class TasksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def task_params
-    params.require(:task).permit(:description, :complete, :date)
+    params.require(:task).permit(:description, :complete, :due_date)
   end
 end

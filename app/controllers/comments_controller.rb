@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
 
   def create
     comment_params = params.require(:comment).permit(:description)
-    @comment = Comments.new(comment_params)
+    @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
     @comment.task_id = @task.id
     @comment.save
