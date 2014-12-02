@@ -16,7 +16,7 @@
   <div class="form-group">
     <%= form_for [@project, @membership] do |f| %>
     <%= f.collection_select :user_id, User.all, :id, :full_name,
-    {include_blank: "Please select a user..."}, {class: "form-control"} %>
+    {include_blank: "Please select a user..."}, {class: "dropdown-toggle form-control"} %>
     <%= f.select :role, [['Member', false],['Owner', true]], {include_blank: false},
     {class: "dropdown-toggle form-control"} %>
     <%= f.submit "Add New Member", class: "btn btn-primary" %>
