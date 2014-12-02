@@ -35,6 +35,12 @@ feature "tasks" do
     fill_in "Password confirmation", with: "1234"
     click_on "Update User"
 
+    # verify alterations were saved and exist on the index
+    expect(page).to have_content("User was successfully updated.")
+    expect(page).to have_content("Joe")
+    expect(page).to have_content("Schmo")
+    expect(page).to have_content("JoeSchmo@example.com")
+
 end
 
 
