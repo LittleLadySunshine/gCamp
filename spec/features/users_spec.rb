@@ -1,26 +1,32 @@
 require 'rails_helper'
 
-feature "signup" do
+feature "tasks" do
 
-  scenario "checks successful signup" do
-    visit users_path
-    expect(page).to have_no_content("Scooby")
-    expect(page).to have_no_content("Doo")
-    expect(page).to have_no_content("ScoobyDoo@example.com")
-    User.create!(first_name: "Scooby", last_name: "Doo",
-      email: "ScoobyDoo@example.com", password: "test",
-      password_confirmation: "test")
-    visit users_path
+  scenario "create user do" do
+    visit home_path
+    click_on "Users"
+    click_on "Create User"
+    fill_in "First name", with: "Scooby"
+    fill_in "Last name", with: "Doo"
+    fill_in "Email", with: "Scooby@example.com"
+    fill_in "Password", with: "1234"
+    fill_in "Password confirmation", with: "1234"
+    click_on "Create User"
+
+    # verify user and attributes exist index
+    expect(page).to have_content("User was successfully created")
     expect(page).to have_content("Scooby")
     expect(page).to have_content("Doo")
-    expect(page).to have_content("ScoobyDoo@example.com")
-    click_on "Edit"
-    fill_in "First name", with: "Scuby"
-    click_on "Update User"
-    click_on "Edit"
-    click_on "Destroy"
-    expect(page).to have_no_content("Doo")
-    expect(page).to have_no_content("ScoobyDoo@example.com")
-  end
+    expect(page).to have_content("Scooby@example.com")
+
+    # verify user exist on show page
+    click_on "test testing"
+    expect(page).to have_no_content("User was successfully created.")
+    expect(page).to have_content("First name: Scooby")
+    expect(page).to have_content("Last name: Doo")
+    expect(page).to have_content("Email: Scooby@example.com")
+
+end
+
 
 end
