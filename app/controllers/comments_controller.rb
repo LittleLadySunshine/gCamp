@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
     @comment.task_id = @task.id
-    @comment.save
+    @comment.save!
     redirect_to project_task_path(@project, @task), notice: "Comment was successfully created."
   end
 
