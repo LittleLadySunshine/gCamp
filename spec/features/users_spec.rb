@@ -26,6 +26,15 @@ feature "tasks" do
     expect(page).to have_content("Last name: Doo")
     expect(page).to have_content("Email: Scooby@example.com")
 
+    # edit user
+    click_on "Edit"
+    fill_in "First name", with: "Joe"
+    fill_in "Last name", with: "Schmo"
+    fill_in "Email", with: "JoeSchmo@example.com"
+    fill_in "Password", with: "1234"
+    fill_in "Password confirmation", with: "1234"
+    click_on "Update User"
+
 end
 
 
