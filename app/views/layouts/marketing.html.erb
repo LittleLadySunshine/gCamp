@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gcamp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+  <div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <%= link_to "gCamp", root_path, class: "navbar-brand" %>
+      <ul class= "nav navbar-nav navbar-right">
+        <% if current_user %>
+        <li><%= link_to "#{current_user.first_name} #{current_user.last_name}", user_path(current_user) %></li>
+        <li><%= link_to "Sign Out", signout_path %></li>
+        <% else %>
+        <li><%= link_to "Sign Up", signup_path %></li>
+        <li><%= link_to "Sign In", signin_path %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class= "container">
+  <% if notice %>
+  <div class= "container alert alert-success" role="alert">
+    <p id="notice"><%= notice %></p>
+  </div>
+  <% end %>
+  <%= yield %>
+</div>
+
+<footer class="container">
+
+  <div class="address">
+    <&copy; Denise McCoy 2014><br>
+    <a href="mailto:#">Denise.McCoy@gmail.com</a>
+  </div>
+  <%=  link_to_unless_current "About", about_path %> |
+  <%=  link_to_unless_current "Terms", terms_path %> |
+  <%=  link_to_unless_current "FAQS", faqs_path %> |
+  <%=  link_to_unless_current "My Projects", projects_path %>
+
+  <div class="pull-right">
+    <%= link_to "https://github.com/LittleLadySunshine" do %>
+    <%=image_tag("github.png", width: "30em")%>
+    <% end %> |
+
+    <%= link_to "www.linkedin.com/pub/denise-mccoy/3a/163/962/=nav_responsive_tab_profile" do %>
+    <%=image_tag("linkedin.png", width: "30em")%>
+    <% end %> |
+
+    <%= link_to "https://twitter.com/redrayofsun" do %>
+    <%=image_tag("twitter.png", width: "30em")%>
+    <% end %> |
+
+    <%= link_to "https://students.gschool.it/cohorts/3/class_notes" do %>
+    <%=image_tag("gschool.png", width: "70em")%>
+    <% end %>
+    <hr>
+  </div>
+</div>
+</footer>
+
+
+</body>
+</html>
