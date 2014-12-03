@@ -10,7 +10,7 @@
 <body>
 <div class="navbar navbar-inverse" role="navigation">
   <div class="container">
-    <%= link_to "gCamp", root_path, class: "navbar-brand" %>
+    <%= link_to "gCamp", projects_path, class: "navbar-brand" %>
 
   <ul class="nav navbar-nav">
     <li class="dropdown">
@@ -19,9 +19,9 @@
         <span class="caret"></span>
       </a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
+        <% @projects.each do |project| %>
+        <li> <%= link_to project.name %></li>
+        <% end %>
         <li class="divider"></li>
         <li><%= link_to "New Project", new_project_path %></li>
       </ul>
