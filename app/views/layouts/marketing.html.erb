@@ -12,13 +12,8 @@
     <div class="container">
       <%= link_to "gCamp", root_path, class: "navbar-brand" %>
       <ul class= "nav navbar-nav navbar-right">
-        <% if current_user %>
-        <li><%= link_to "#{current_user.first_name} #{current_user.last_name}", user_path(current_user) %></li>
-        <li><%= link_to "Sign Out", signout_path %></li>
-        <% else %>
         <li><%= link_to "Sign Up", signup_path %></li>
         <li><%= link_to "Sign In", signin_path %></li>
-        <% end %>
       </ul>
     </div>
   </div>
@@ -41,7 +36,7 @@
   </div>
   <%=  link_to_unless_current "About", about_path %> |
   <%=  link_to_unless_current "Terms", terms_path %> |
-  <%=  link_to_unless_current "FAQS", faqs_path %> 
+  <%=  link_to_unless_current "FAQS", faqs_path %>
 
   <div class="pull-right">
     <%= link_to "https://github.com/LittleLadySunshine" do %>
