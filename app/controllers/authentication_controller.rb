@@ -1,4 +1,4 @@
-class AuthenticationController < ApplicationController
+class AuthenticationController < MarketingController
 
   # def new
   #   @user = User.new

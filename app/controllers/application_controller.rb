@@ -3,16 +3,18 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-before_action :require_login
-
   def current_user
   User.find_by(id: session[:user_id])
 end
 
   helper_method :current_user
 
-  def require_membership
-    @membership = Membership.where(:user_id, :current_user.id)
-    membership = @membership.pluck()
+  def logged_in?
+    unless current_user
+      redirect_to signin_path
+    end
+  end
+
+  helper_method :logged_in?
 
 end

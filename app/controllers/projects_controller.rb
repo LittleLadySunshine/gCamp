@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
-  before_action: :set_project, only: [:show, :edit, :update, :destroy]
-  before_action:
-  before_action:
+  before_action :logged_in?
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action
 
   def index
     @projects = Project.all
@@ -48,6 +48,7 @@ class ProjectsController < ApplicationController
     set_project
     @project.destroy
     redirect_to projects_path, notice: "Project was deleted successfully"
+  end
   end
 
   private
