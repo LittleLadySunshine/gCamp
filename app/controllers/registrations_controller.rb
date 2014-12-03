@@ -14,7 +14,7 @@ class RegistrationsController < MarketingController
       )
     if @user.save
       session[:user_id] = @user.id
-      redirect_to projects_path
+      redirect_to new_project_path
     else
       signup_up_error = "First name cannot be blank
       /Last name cannot be blank
