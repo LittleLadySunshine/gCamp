@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  before_action :logged_in?
   before_action do
     @task = Task.find(params[:task_id])
     @project = Project.find(params[:project_id])
