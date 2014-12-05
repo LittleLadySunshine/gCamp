@@ -3,8 +3,8 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
 
-  before_action :authorize_membership, only: [:show]
-  before_action :authorize_owner, only: [:edit, :update, :destroy]
+  before_action :has_membership, only: [:show]
+  before_action :require_owner, only: [:edit, :update, :destroy]
 
 
   def index

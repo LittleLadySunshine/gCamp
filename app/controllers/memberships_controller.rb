@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :logged_in?
-  before_action :authorize_membership
-  before_action :authorize_owner, only: [:new, :create, :edit, :update]
+  before_action :has_membership
+  before_action :require_owner, only: [:new, :create, :edit, :update]
 
   before_action do
     @project = Project.find(params[:project_id])
