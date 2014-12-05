@@ -8,8 +8,13 @@ class MembershipsController < ApplicationController
   end
 
   def index
+    member = @project.memberships.where(user_id: current_user.id)
+    @role = member[0].role
     @membership = @project.memberships.new
     @memberships = @project.memberships.all
+    owners = @project.memberships.where(role: "owner")
+    @total_owners = owners.count
+    @owners = @project.memberships.where(role: "owner")
   end
 
   def create
