@@ -22,17 +22,22 @@
         <% current_user.projects.each do |project| %>
         <li> <%= link_to project.name, project_path(project) %></li>
         <% end %>
+    <%= link_to "Users", users_path %>
         <li class="divider"></li>
         <li><%= link_to "New Project", new_project_path %></li>
       </ul>
     </li>
   </ul>
 
-    <ul class= "nav navbar-nav navbar-right">
-      <li><%= link_to "#{current_user.first_name} #{current_user.last_name}", user_path(current_user) %></li>
-      <li><%= link_to "Sign Out", signout_path %></li>
-    </ul>
-    </div>
+  <div class="nav navbar-nav">
+    <%= link_to "Users", users_path, class: "navbar-brand" %>
+  </div>
+
+  <ul class= "nav navbar-nav navbar-right">
+    <li><%= link_to "#{current_user.first_name} #{current_user.last_name}", user_path(current_user) %></li>
+    <li><%= link_to "Sign Out", signout_path %></li>
+  </ul>
+  </div>
   </div>
 </div>
 
