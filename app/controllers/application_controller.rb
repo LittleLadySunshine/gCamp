@@ -17,6 +17,31 @@ end
     end
   end
 
+  def project_id_match
+    project_list = Membership.where(user_id: current_user.id).pluck(:project_id)
+    @project = Project.find(params[:id])
+    unless projet_list.include?(@project.id)
+      raise AccessDenied
+    end
+  end
+
+  def authorize_membership
+    # @project = Project.find(params[:id])
+    # unless current_user.is_Member?(@project)
+    #   raise AccessDenied
+    # end
+  end
+
+  def authorize_owner
+    # @project = Project.find(params[:id])
+    # unless current_user.is_Owner?(@project)
+    #   raise AccessDenied
+    # end
+  end
+
+
+
   helper_method :logged_in?
+
 
 end

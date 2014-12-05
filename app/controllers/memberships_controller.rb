@@ -1,4 +1,8 @@
 class MembershipsController < ApplicationController
+  before_action :logged_in?
+  before_action :authorize_membership
+  before_action :authorize_owner, only: [:new, :create, :edit, :update]
+
   before_action do
     @project = Project.find(params[:project_id])
   end
@@ -42,6 +46,20 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def authorize_membership
+    # current_user.projects.include?(@project)
+    # project_list = Membership.where(user_id: current_user.id).pluck(:project_id)
+    # unless project_list.include?(@project.id)
+    #   raise AccessDenied
+    end
+
+    def authorize_owner
+      # @project = Project.find(params[:project_id])
+      # unless current_user.is_owner?(@project)
+      #   raise AccessDenied
+      # end
+    end
+
 
   def destroy
     @membership = @project.memberships.find(params[:id])
@@ -53,9 +71,9 @@ class MembershipsController < ApplicationController
 
   private
 
+
   def membership_params
-    params.require(:membership).permit(:role, :user_id, :project_id)
+    params.require(:membership).permit(:user_id, :title).merge(
+    :project_id => params[:project_id])
   end
-
-
 end
