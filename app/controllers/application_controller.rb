@@ -25,18 +25,20 @@ end
     end
   end
 
-  def authorize_membership
-    # @project = Project.find(params[:id])
-    # unless current_user.is_Member?(@project)
-    #   raise AccessDenied
-    # end
+  def has_membership
+    memberships = Membership.where(user_id: current_user.id)
+    member_projects = memberships.pluck(:project_id)
+    unless member_projects.include?(@project.id)
+      render file: 'public/404.html', status: :not_found, layout: false
+    end
   end
 
-  def authorize_owner
-    # @project = Project.find(params[:id])
-    # unless current_user.is_Owner?(@project)
-    #   raise AccessDenied
-    # end
+  def require_owner
+    @role = @project.memberships.where(user_id: current_user.id).first.role
+    unless
+      @role == "owner"
+      render 'public', status: :not_found, layout: false
+    end
   end
 
 
