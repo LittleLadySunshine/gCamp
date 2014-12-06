@@ -1,10 +1,17 @@
 class ProjectsController < ApplicationController
-
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
-
   before_action :has_membership, only: [:show]
   before_action :require_owner, only: [:edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+
+
+  before_action :only => [:show, :edit, :update, :destroy] do
+    set_project
+    if @project.users.include? current_user
+    else
+      raise AccessDenied
+    end
+  end
 
 
   def index
@@ -19,23 +26,27 @@ class ProjectsController < ApplicationController
     @project = Project.new
   end
 
+
   def create
     @project = Project.new(project_params)
+    @membership = @project.memberships.new(
+    :project_id => @project.id,
+    :user_id => current_user.id,
+    :role_id => Role.find_by_role("owner").id)
+    @membership.save
     if @project.save
-      Membership.create(project_id: @project.id, user_id: current_user.id, role: 'Owner')
       redirect_to project_tasks_path(@project), notice: "Project was created successfully"
     else
       render :new
     end
   end
 
-
   def edit
-    @project = Project.find(params[:id])
+    set_project
   end
 
   def show
-    @project = Project.find(params[:id])
+    set_project
   end
 
   def update
