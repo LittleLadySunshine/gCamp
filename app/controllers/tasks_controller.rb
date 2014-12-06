@@ -1,4 +1,7 @@
 class TasksController < ApplicationController
+  before_action :has_membership, only: [:show]
+  before_action :require_owner, only: [:edit, :update, :destroy]
+  
   before_action do
     @project = Project.find(params[:project_id])
   end

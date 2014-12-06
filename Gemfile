@@ -41,7 +41,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem "capybara"
   gem 'launchy'
-  gem 'pry'
+  gem 'pry-rails'
 end
 
 # Use unicorn as the app server
