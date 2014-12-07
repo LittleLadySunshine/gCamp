@@ -2,16 +2,15 @@ class ProjectsController < ApplicationController
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
-
-  before_action :has_membership, only: [:show]
-  before_action :require_owner, only: [:edit, :update, :destroy]
+  before_action :current_user_has_project_permission, except: [:index, :new, :create, :destroy]
+  before_action :current_user_is_owner_to_edit, only: [:edit, :update, :destroy]
 
 
   def index
-    if current_user
-      @projects = current_user.projects
-    else
+    if current_user.admin == true
       @projects = Project.all
+    else
+      @projects = current_user.projects
     end
   end
 
@@ -21,12 +20,13 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    @project.memberships.new(
-    user: current_user,
-    role: 'owner'
-    )
     if @project.save
-      redirect_to project_tasks_path(@project), notice: 'Project was successfully created'
+      Membership.create!(
+      user_id: current_user.id,
+      project_id: @project.id,
+      role: "owner",
+      )
+      redirect_to project_tasks_path(@project), notice: 'Project successfully created'
     else
       render :new
     end
@@ -44,24 +44,18 @@ class ProjectsController < ApplicationController
   def update
     set_project
     if @project.update(project_params)
-      redirect_to projects_path, notice: "Project was updated successfully"
+      redirect_to @project, notice: "Project was updated successfully."
     else
       render :edit
     end
   end
 
   def destroy
-    if memberships = @project.memberships.where(
-      role: 'owner',
-      user_id: current_user,
-      project_id: @project
-      )
+    @project = Project.find(params[:id])
     @project.destroy
-    redirect_to projects_path, notice: "Project was deleted successfully"
-    else
-      redirect_to root_path
+    redirect_to projects_path, notice: 'Project was successfully destroyed.'
   end
-  end
+
 
   private
 
@@ -71,6 +65,27 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:id])
+  end
+
+
+  def current_user_has_project_permission
+    if (@project.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
+      true
+    else
+      raise AccessDenied
+    end
+  end
+
+  def current_user_is_owner_to_edit
+    current_membership = @project.memberships.where(user_id: current_user.id)
+    current_membership.each do |membership|
+      if (membership.role == "owner") || (current_user.admin == true)
+        @current_project_owner = true
+      else
+        @current_project_owner = false
+        raise AccessDenied
+      end
+    end
   end
 
 end

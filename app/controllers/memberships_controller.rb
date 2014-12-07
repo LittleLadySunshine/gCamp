@@ -1,9 +1,10 @@
 class MembershipsController < ApplicationController
+
+  before_action :logged_in?
   before_action :set_membership, only: [:update, :destroy]
   before_action :current_user_has_membership_permission
   before_action :current_user_is_owner_to_edit, only: [:create, :update]
   before_action :can_delete_membership, only: [:destroy]
-  before_action :logged_in?
   before_action do
     @project = Project.find(params[:project_id])
   end
@@ -71,8 +72,7 @@ class MembershipsController < ApplicationController
   end
 
   def current_user_has_membership_permission
-    if (@project.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
-      true
+    if (@project.memberships.pluck(:user_id).include? current_user.id)
     else
       raise AccessDenied
     end
@@ -102,10 +102,6 @@ class MembershipsController < ApplicationController
         raise AccessDenied
       end
     end
-  end
-  
-  def set_membership
-    @membership = @project.memberships.find(params[:id])
   end
 
   def membership_params
