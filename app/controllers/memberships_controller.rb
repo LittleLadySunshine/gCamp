@@ -1,8 +1,9 @@
 class MembershipsController < ApplicationController
+  before_action :set_membership, only: [:update, :destroy]
+  before_action :current_user_has_membership_permission
+  before_action :current_user_is_owner_to_edit, only: [:create, :update]
+  before_action :can_delete_membership, only: [:destroy]
   before_action :logged_in?
-  before_action :has_membership
-  # before_action :require_owner, only: [:new, :create, :edit, :update]
-
   before_action do
     @project = Project.find(params[:project_id])
   end
@@ -50,29 +51,6 @@ class MembershipsController < ApplicationController
     end
   end
 
-  def authorize_membership
-    # current_user.projects.include?(@project)
-    # project_list = Membership.where(user_id: current_user.id).pluck(:project_id)
-    # unless project_list.include?(@project.id)
-    #   raise AccessDenied
-    end
-
-    def authorize_owner
-      # @project = Project.find(params[:project_id])
-      # unless current_user.is_owner?(@project)
-      #   raise AccessDenied
-      # end
-    end
-
-  #
-  # def destroy
-  #   @membership = @project.memberships.find(params[:id])
-  #   temp_name = @membership.user.full_name
-  #   @membership.destroy
-  #   redirect_to project_memberships_path(@project, @membership),
-  #     notice: "#{temp_name} was successfully destroyed."
-  # end
-
   def destroy
     @membership = @project.memberships.find(params[:id])
     if @membership.destroy
@@ -88,6 +66,44 @@ class MembershipsController < ApplicationController
 
   private
 
+  def set_membership
+    @membership = @project.memberships.find(params[:id])
+  end
+
+  def current_user_has_membership_permission
+    if (@project.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
+      true
+    else
+      raise AccessDenied
+    end
+  end
+
+  def current_user_is_owner_to_edit
+    current_membership = @project.memberships.where(user_id: current_user.id)
+    current_membership.each do |membership|
+      @membership_role = membership.role
+      if (membership.role == "owner") || (current_user.admin == true)
+        true
+      else
+        raise AccessDenied
+      end
+    end
+  end
+
+  def can_delete_membership
+    current_membership = @project.memberships.where(user_id: current_user.id)
+    current_membership.each do |membership|
+      @membership_role = membership.role
+      if (membership.role == "owner") || (current_user.admin == true)
+        true
+      elsif @membership.user_id == current_user.id
+        true
+      else
+        raise AccessDenied
+      end
+    end
+  end
+  
   def set_membership
     @membership = @project.memberships.find(params[:id])
   end
