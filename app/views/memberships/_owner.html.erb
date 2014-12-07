@@ -39,7 +39,7 @@
 </div>
 
 <% end %>
-<!-- <br><br><br><br><br> -->
+<br><br><br><br><br>
 
 <% @project.users.each do |user| %>
   <% user.memberships.where(project_id: @project.id).each do |membership| %>
