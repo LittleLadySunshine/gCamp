@@ -1,9 +1,20 @@
-<div class="container">
-  <%= link_to "Destroy", @project, :class => "btn btn-danger pull-right new-task" ,
-      :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-  <%= link_to "Edit", edit_project_path(@project),
-      :class => "btn btn-primary pull-right new-task" %>
-
+<div class="page-header">
+  <div class = 'pull-right'>
+    <% current_membership = @project.memberships.where(user_id: current_user.id) %>
+    <% current_membership.each do |membership| %>
+    <% @membership_role = membership.role %>
+    <% if (membership.role == "owner")%>
+    <%= link_to 'Edit', edit_project_path, class:"btn btn-info btn-large" %>
+    <% end %>
+    <% end %>
+    <% if current_user.admin == true && @membership_role != "owner" %>
+    <%= link_to 'Edit', edit_project_path, class:"btn btn-info btn-large" %>
+    <% end %>
+  </div>
+  <h1>
+    <%= @project.name %>
+  </h1>
+</div>
 
 
   <h1>
@@ -17,7 +28,7 @@
       <%= @project.name %>
     </li>
   </ol>
-  
+
 <div>
   <p>
     <%= link_to pluralize(@project.tasks.count, 'Task'),
