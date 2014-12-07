@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :has_membership, only: [:show]
   before_action :require_owner, only: [:edit, :update, :destroy]
-  
+
   before_action do
     @project = Project.find(params[:project_id])
   end
@@ -72,7 +72,7 @@ class TasksController < ApplicationController
     end
   end
 
-  # private
+  private
   # # Use callbacks to share common setup or constraints between actions.
   def set_project
     @project = Project.find(params[:project_id])
@@ -82,4 +82,15 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:description, :complete, :due_date)
   end
+
+
+  def current_user_has_tasks_permission
+    if (@project.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
+      true
+    else
+      raise AccessDenied
+    end
+  end
+
+
 end

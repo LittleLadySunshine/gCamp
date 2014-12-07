@@ -5,18 +5,13 @@ class MembershipsController < ApplicationController
   before_action :current_user_has_membership_permission
   before_action :current_user_is_owner_to_edit, only: [:create, :update]
   before_action :can_delete_membership, only: [:destroy]
+
   before_action do
     @project = Project.find(params[:project_id])
   end
 
   def index
-    member = @project.memberships.where(user_id: current_user.id)
-    @role = member[0].role
-    @membership = @project.memberships.new
-    @memberships = @project.memberships.all
-    owners = @project.memberships.where(role: "owner")
-    @total_owners = owners.count
-    @owners = @project.memberships.where(role: "owner")
+   @memberships = @project.memberships.all
   end
 
   def create
@@ -72,7 +67,7 @@ class MembershipsController < ApplicationController
   end
 
   def current_user_has_membership_permission
-    if (@project.memberships.pluck(:user_id).include? :current_user.id)
+    if (@project.memberships.pluck(:user_id).include? current_user.id)
     else
       raise AccessDenied
     end

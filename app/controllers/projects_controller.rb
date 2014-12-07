@@ -2,7 +2,8 @@ class ProjectsController < ApplicationController
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
-  before_action :current_user_has_project_permission, except: [:index, :new, :create, :destroy]
+  before_action :current_user_has_project_permission, except:
+  [:index, :new, :create, :destroy]
   before_action :current_user_is_owner_to_edit, only: [:edit, :update, :destroy]
 
 
@@ -67,7 +68,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
-
+  
   def current_user_has_project_permission
     if (@project.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
       true
