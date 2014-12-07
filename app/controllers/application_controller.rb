@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
- include SessionsHelper
   protect_from_forgery with: :exception
   before_action :logged_in?
+
+  def current_user
+    User.find_by(id: session[:user_id])
+  end
 
   def logged_in?
     unless current_user
@@ -19,5 +22,6 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :logged_in?
+  helper_method :current_user
 
 end

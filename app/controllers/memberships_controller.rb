@@ -72,7 +72,7 @@ class MembershipsController < ApplicationController
   end
 
   def current_user_has_membership_permission
-    if (@project.memberships.pluck(:user_id).include? current_user.id)
+    if (@project.memberships.pluck(:user_id).include? :current_user.id)
     else
       raise AccessDenied
     end
