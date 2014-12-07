@@ -43,13 +43,7 @@ end
 
   end
 
-  def require_owner
-    @role = @project.memberships.where(user_id: current_user.id).first.role
-    unless
-      @role == "owner"
-      render 'public', status: :not_found, layout: false
-    end
-  end
+
 
   def projects
     @projects = Project.all

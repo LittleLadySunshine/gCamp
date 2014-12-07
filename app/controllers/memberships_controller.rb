@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :logged_in?
   before_action :has_membership
-  before_action :require_owner, only: [:new, :create, :edit, :update]
+  # before_action :require_owner, only: [:new, :create, :edit, :update]
 
   before_action do
     @project = Project.find(params[:project_id])
@@ -43,9 +43,8 @@ class MembershipsController < ApplicationController
 
   def update
     @membership = @project.memberships.find(params[:id])
-    if @membership.update(membership_params)
-      redirect_to project_memberships_path(@project, @membership),
-        notice: "#{@membership.user.full_name} was successfully updated."
+    if @membership.update(params.require(:membership).permit(:project_id, :user_id, :role))
+      redirect_to project_memberships_path, notice: "#{@membership.user.full_name} was updated successfully"
     else
       render :index
     end
@@ -65,17 +64,33 @@ class MembershipsController < ApplicationController
       # end
     end
 
+  #
+  # def destroy
+  #   @membership = @project.memberships.find(params[:id])
+  #   temp_name = @membership.user.full_name
+  #   @membership.destroy
+  #   redirect_to project_memberships_path(@project, @membership),
+  #     notice: "#{temp_name} was successfully destroyed."
+  # end
 
   def destroy
     @membership = @project.memberships.find(params[:id])
-    temp_name = @membership.user.full_name
-    @membership.destroy
-    redirect_to project_memberships_path(@project, @membership),
-      notice: "#{temp_name} was successfully destroyed."
+    if @membership.destroy
+      if (@project.memberships.pluck(:user_id).include? current_user.id) || current_user.admin == true
+        redirect_to project_memberships_path, notice: "#{@membership.user.full_name} was deleted successfully"
+      else
+        redirect_to projects_path, notice: "#{@membership.user.full_name} was deleted successfully"
+      end
+    else
+      render :index
+    end
   end
 
   private
 
+  def set_membership
+    @membership = @project.memberships.find(params[:id])
+  end
 
   def membership_params
     params.require(:membership).permit(:user_id, :title).merge(
