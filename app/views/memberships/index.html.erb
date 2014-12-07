@@ -1,51 +1,9 @@
-<h1><%= @project.name %>: Manage Members</h1>
-
-<ol class="breadcrumb task_index">
-  <li><%= link_to "Projects", projects_path %></li>
-  <li><%= link_to @project.name, project_path(@project) %></li>
-  <li class="active">Memberships</li>
-</ol>
-
-<div class="row form-group">
-  <div class="col-sm-5 memberships">
-    <%= render "shared/errors", object: @membership %>
-  </div>
-</div>
-
-<%= form_for [@project, @membership], html: {class: "form-horizontal"} do |f| %>
-<div class="well form-inline col-sm-5">
-  <div class="form-group">
-    <%= f.collection_select :user_id, User.all, :id, :full_name,
-    {include_blank: "Please select a user..."}, {class: "dropdown-toggle form-control"} %>
-    <%= f.select :role, ['Member','Owner'], {include_blank: false},
-    {class: "dropdown-toggle form-control"} %>
-    <%= f.submit "Add New Member", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
-
-<table class="table">
-  <tbody>
-    <% @memberships.each do |membership| %>
-    <tr>
-      <%= form_for [@project, membership] do |f| %>
-      <td class="col-sm-2">
-        <%= link_to membership.user.full_name, user_path(membership.user) %>
-      </td>
-      <td class="col-sm-2">
-        <%= f.select :role, ['Member','Owner'],
-        {include_blank: false}, {class: "dropdown-toggle form-control membership"} %>
-      </td>
-      <td class="col-sm-1">
-        <%= f.submit "Update", class: "btn btn-primary" %>
-      </td>
-      <td>
-        <%= link_to "", project_membership_path(@project, membership),
-        method: :delete, data: { confirm: 'Are you sure?'},
-        class: "glyphicon glyphicon-remove" %>
-      </td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<% current_membership = @project.memberships.where(user_id: current_user.id) %>
+<% current_membership.each do |membership| %>
+<% @membership_role = membership.role %>
+<% end %>
+<% if (@membership_role == "owner") %>
+<%= render "owner" %>
+<% else %>
+<%= render "member" %>
+<% end %>
