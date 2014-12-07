@@ -1,5 +1,4 @@
 class MembershipsController < ApplicationController
-
   before_action :logged_in?
   before_action :set_membership, only: [:update, :destroy]
   before_action :current_user_has_membership_permission
