@@ -84,9 +84,7 @@ class TasksController < ApplicationController
 
 
   def current_user_has_tasks_permission
-    if (@project.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
-      true
-    else
+    unless (Project.all.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
       raise AccessDenied
     end
   end

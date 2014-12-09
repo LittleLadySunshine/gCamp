@@ -10,52 +10,85 @@ class MembershipsController < ApplicationController
   end
 
   def index
-   @memberships = @project.memberships.all
-  end
-
-  def create
-    @membership = @project.memberships.new(membership_params)
-    if @membership.save
-      redirect_to project_memberships_path(@project, @membership),
-      notice: "#{@membership.user.full_name} was successfully created."
-    else
-      @memberships = @project.memberships.all
-      render :index
+    if current_user.admin == false
+      member = @project.memberships.where(user_id: current_user.id)
+      @role = member[0]
     end
-  end
-
-  def show
-    @membership = @project.memberships.find(params[:id])
-  end
-
-
-  def new
     @membership = @project.memberships.new
+    @memberships = @project.memberships.all
+    @owner = @project.membership.where(role: "owner")
+    @total_owners = @owners.count
   end
-
-  def edit
-    @membership = @project.memberships.find(params[:id])
-  end
-
-  def update
-    @membership = @project.memberships.find(params[:id])
-    if @membership.update(params.require(:membership).permit(:project_id, :user_id, :role))
-      redirect_to project_memberships_path, notice: "#{@membership.user.full_name} was updated successfully"
-    else
-      render :index
+  
+  def create
+    if current_user.admin == false
+      member = @project.memberships.where(user_id: current_user.id)
+      @role = member[0]
     end
-  end
 
-  def destroy
-    @membership = @project.memberships.find(params[:id])
-    if @membership.destroy
-      if (@project.memberships.pluck(:user_id).include? current_user.id) || current_user.admin == true
-        redirect_to project_memberships_path, notice: "#{@membership.user.full_name} was deleted successfully"
+      @membership = @project.memberships.new(membership_params)
+      if @role == "owner" || current_user.admin == true
+      if @membership.save
+        redirect_to project_memberships_path(@project, @membership),
+        notice: "#{@membership.user.full_name} was successfully created."
       else
-        redirect_to projects_path, notice: "#{@membership.user.full_name} was deleted successfully"
+        owners = @project.memberships.where(role: "owner")
+        @total_owners = owners.count
+        @memberships = @project.memberships.all
+        render :index
+      end
+    end
+
+    def show
+      @membership = @project.memberships.find(params[:id])
+    end
+
+
+    def new
+      @membership = @project.memberships.new
+    end
+
+    def edit
+      @membership = @project.memberships.find(params[:id])
+    end
+
+    def update
+      @membership = @project.memberships.find(params[:id])
+      if @membership.update(params.require(:membership).permit(:project_id, :user_id, :role))
+        redirect_to project_memberships_path, notice: "#{@membership.user.full_name} was updated successfully"
+      else
+        render :index
+      end
+    end
+
+    def destroy
+      if current_user.admin == false
+        @membership = @project.membership.fine(param[:id])
+        member = @project.memberships.where(user_id: current_user.id)
+        @role = member[0]
+      end
+
+      @owners = @project.memberships.where(role: "owner")
+      if @role == 'member' && @role == "owner" || current_user.admin == true
+        @membership.destroy
+        redirect_to projects_path, notice: "#{@membership.user.full_name} was removed successfully"
+      elseif @owners.count > 1 && @role == "owner" || current_user.admin == true
+        if @membership.user.id == current_user.id
+          @membership.destroy
+          redirect_to projects path
+      else
+        @membership.destroy
+        redirect_to project_memberships_path(
+        @project), notice: "#{@membership.user.full_name} was removed successfully"
+      end
+    elsif @role == "owner" || current_user.admin == true
+      if @membership.user.id != current_user.id
+        @membership.destroy
+        redirect_to project_memberships_path(
+        @project), notice: "#{@membership.user.full_name} was removed successfully"
       end
     else
-      render :index
+      render file: 'public/404.html', status: :not_found, layout: false
     end
   end
 
@@ -66,14 +99,14 @@ class MembershipsController < ApplicationController
   end
 
   def current_user_has_membership_permission
-    if (@project.memberships.pluck(:user_id).include? current_user.id)
+    if (@project.all.memberships.pluck(:user_id).include? current_user.id)
     else
       raise AccessDenied
     end
   end
 
   def current_user_is_owner_to_edit
-    current_membership = @project.memberships.where(user_id: current_user.id)
+    current_membership = @project.all.memberships.where(user_id: current_user.id)
     current_membership.each do |membership|
       @membership_role = membership.role
       if (membership.role == "owner") || (current_user.admin == true)
@@ -85,7 +118,7 @@ class MembershipsController < ApplicationController
   end
 
   def can_delete_membership
-    current_membership = @project.memberships.where(user_id: current_user.id)
+    current_membership = @project.all.memberships.where(user_id: current_user.id)
     current_membership.each do |membership|
       @membership_role = membership.role
       if (membership.role == "owner") || (current_user.admin == true)
@@ -99,7 +132,5 @@ class MembershipsController < ApplicationController
   end
 
   def membership_params
-    params.require(:membership).permit(:user_id, :title).merge(
-    :project_id => params[:project_id])
-  end
+    params.require(:membership).permit(:user_id, :role, :project_id)
 end
