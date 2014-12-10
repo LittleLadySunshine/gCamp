@@ -1,8 +1,11 @@
 class MembershipsController < ApplicationController
+
   before_action :logged_in?
+
   before_action do
     @project = Project.find(params[:project_id])
   end
+
   before_action :only => [:edit, :update, :destroy] do
     set_membership
     if owner?(@project, current_user)
@@ -12,15 +15,10 @@ class MembershipsController < ApplicationController
   end
 
 
+
   def index
-    if current_user.admin == false
-      member = @project.memberships.where(user_id: current_user.id)
-      @role = member[0]
-    end
-    @membership = @project.memberships.new
     @memberships = @project.memberships.all
-    owner = @project.memberships.where(role: "owner")
-    total_owners = owner.count
+    @membership = @project.memberships.new
   end
 
   def create
