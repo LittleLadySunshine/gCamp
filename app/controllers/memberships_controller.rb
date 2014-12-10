@@ -73,7 +73,7 @@ class MembershipsController < ApplicationController
         render "index"
       end
     end
-  end
+
 
   private
 
