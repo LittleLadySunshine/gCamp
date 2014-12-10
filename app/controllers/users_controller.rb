@@ -1,13 +1,27 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :current_user_can_edit_own_info, only: [:edit, :update, :destroy]
+  before_action :logged_in?
+  before_action :only => [:edit, :update, :destroy] do
+    set_user
+    if current_user.admin || @user == current_user
+    else
+      raise AccessDenied
+    end
+  end
 
   def index
-    @user = User.all
+    if current_user.admin
+      @users = User.all
+    else
+      @users = []
+      current_user.projects.each do |project|
+        @users += project.users
+      end
+      @users = @users.uniq
+    end
   end
 
   def show
-    @user = User.find(params[:id])
+    set_user
   end
 
   def new
@@ -15,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    set_user
   end
 
   def create
@@ -31,53 +45,37 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
   def update
-    if (current_user != nil) && current_user.admin == true
-      if @user.update(params.require(:user).permit(:first_name, :last_name, :email, :admin))
-        redirect_to @user, notice: 'User was successfully updated.'
-      else
-        render :edit
-      end
+    set_user
+    if @user.update(user_params)
+      redirect_to users_path, notice: 'User was successfully updated.'
     else
-      if @user.update(params.require(:user).permit(:first_name, :last_name, :email))
-        redirect_to @user, notice: 'User was successfully updated.'
-      else
-        render :edit
-      end
+      render :edit
     end
   end
 
   def destroy
-    @user = User.find(params[:id])
+    set_user
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_path, notice: 'User was successfully destroyed.' }
-    end
+    redirect_to users_path, notice: "User was succesfully deleted"
   end
+
 
   private
 
   def user_params
-    params.require(:user).permit(
-    :first_name,
-    :last_name,
-    :email,
-    :password,
-    :password_confirmation
-    )
+    if current_user.admin
+      params.require(:user).permit(:first_name, :last_name, :email,
+      :password,:password_confirmation,
+      :admin)
+    else
+      params.require(:user).permit(:first_name, :last_name, :email,
+      :password,:password_confirmation)
+    end
   end
-
 
   def set_user
     @user = User.find(params[:id])
-  end
-
-
-  def current_user_can_edit_own_info
-    if @user.id == current_user.id || current_user.admin == true
-    else
-      raise AccessDenied
-    end
   end
 end
