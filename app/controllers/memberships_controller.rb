@@ -1,14 +1,15 @@
 class MembershipsController < ApplicationController
-
+  before_action :logged_in?
   before_action do
     @project = Project.find(params[:project_id])
   end
-
-  before_action :logged_in?
-  before_action :set_membership, only: [:update, :destroy]
-  before_action :current_user_has_membership_permission
-  before_action :current_user_is_owner_to_edit, only: [:create, :update]
-  before_action :can_delete_membership, only: [:destroy]
+  before_action :only => [:edit, :update, :destroy] do
+    set_membership
+    if owner?(@project, current_user)
+    else
+      raise AccessDenied
+    end
+  end
 
 
   def index
@@ -73,11 +74,11 @@ class MembershipsController < ApplicationController
       if current_user.admin == false
         @membership = @project.memberships.find(params[:id])
         member = @project.memberships.where(user_id: current_user.id)
-        @role = member[0]
+        @role = member[0].role
       end
 
       @owners = @project.memberships.where(role: "owner")
-        if @role == 'member' && @role == "owner" || current_user.admin == true
+        if @role == 'member' || @role == "owner" || current_user.admin == true
           @membership.destroy
           redirect_to projects_path, notice: "#{@membership.user.full_name} was removed successfully"
         elsif @owners.count > 1 && @role == "owner" || current_user.admin == true
