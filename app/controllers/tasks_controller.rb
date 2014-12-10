@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :current_user_has_tasks_permission
+  # before_action :current_user_has_tasks_permission
 
   before_action do
     @project = Project.find(params[:project_id])
@@ -83,11 +83,11 @@ class TasksController < ApplicationController
   end
 
 
-  def current_user_has_tasks_permission
-    unless (Project.all.memberships.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
-      raise AccessDenied
-    end
-  end
+  # def current_user_has_tasks_permission
+  #   unless (@project.pluck(:user_id).include? current_user.id) || (current_user.admin == true)
+  #     raise AccessDenied
+  #   end
+  # end
 
 
 end

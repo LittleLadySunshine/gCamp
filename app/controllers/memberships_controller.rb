@@ -1,13 +1,15 @@
 class MembershipsController < ApplicationController
+
+  before_action do
+    @project = Project.find(params[:project_id])
+  end
+
   before_action :logged_in?
   before_action :set_membership, only: [:update, :destroy]
   before_action :current_user_has_membership_permission
   before_action :current_user_is_owner_to_edit, only: [:create, :update]
   before_action :can_delete_membership, only: [:destroy]
 
-  before_action do
-    @project = Project.find(params[:project_id])
-  end
 
   def index
     if current_user.admin == false
@@ -16,26 +18,32 @@ class MembershipsController < ApplicationController
     end
     @membership = @project.memberships.new
     @memberships = @project.memberships.all
-    @owner = @project.membership.where(role: "owner")
-    @total_owners = @owners.count
+    owner = @project.memberships.where(role: "owner")
+    total_owners = owner.count
   end
-  
+
   def create
+    @membership = @project.memberships.new(membership_params)
     if current_user.admin == false
       member = @project.memberships.where(user_id: current_user.id)
       @role = member[0]
+      @membership.save
+      @id = @membership.user_id
+      redirect_to project_memberships_path(@project),
+      notice: "#{User.find(@id).full_name} was successfully created."
     end
 
-      @membership = @project.memberships.new(membership_params)
+    @membership = @project.memberships.new(membership_params)
       if @role == "owner" || current_user.admin == true
-      if @membership.save
-        redirect_to project_memberships_path(@project, @membership),
-        notice: "#{@membership.user.full_name} was successfully created."
-      else
-        owners = @project.memberships.where(role: "owner")
-        @total_owners = owners.count
-        @memberships = @project.memberships.all
-        render :index
+        if @membership.save
+          redirect_to project_memberships_path(@project),
+          notice: "#{@membership.user.full_name} was successfully created."
+        else
+          owners = @project.memberships.where(role: "owner")
+          @total_owners = owners.count
+          @memberships = @project.memberships.all
+          render :index
+        end
       end
     end
 
@@ -69,27 +77,27 @@ class MembershipsController < ApplicationController
       end
 
       @owners = @project.memberships.where(role: "owner")
-      if @role == 'member' && @role == "owner" || current_user.admin == true
-        @membership.destroy
-        redirect_to projects_path, notice: "#{@membership.user.full_name} was removed successfully"
-      elseif @owners.count > 1 && @role == "owner" || current_user.admin == true
-        if @membership.user.id == current_user.id
+        if @role == 'member' && @role == "owner" || current_user.admin == true
           @membership.destroy
-          redirect_to projects path
-      else
-        @membership.destroy
-        redirect_to project_memberships_path(
-        @project), notice: "#{@membership.user.full_name} was removed successfully"
-      end
-    elsif @role == "owner" || current_user.admin == true
-      if @membership.user.id != current_user.id
-        @membership.destroy
-        redirect_to project_memberships_path(
-        @project), notice: "#{@membership.user.full_name} was removed successfully"
-      end
-    else
-      render file: 'public/404.html', status: :not_found, layout: false
-    end
+          redirect_to projects_path, notice: "#{@membership.user.full_name} was removed successfully"
+        elsif @owners.count > 1 && @role == "owner" || current_user.admin == true
+          if @membership.user.id == current_user.id
+            @membership.destroy
+            redirect_to projects path
+          else
+            @membership.destroy
+            redirect_to project_memberships_path(
+            @project), notice: "#{@membership.user.full_name} was removed successfully"
+          end
+        elsif @role == "owner" || current_user.admin == true
+          if @membership.user.id != current_user.id
+            @membership.destroy
+            redirect_to project_memberships_path(
+            @project), notice: "#{@membership.user.full_name} was removed successfully"
+          end
+        else
+        raise AccessDenied
+        end
   end
 
   private
@@ -99,14 +107,14 @@ class MembershipsController < ApplicationController
   end
 
   def current_user_has_membership_permission
-    if (@project.all.memberships.pluck(:user_id).include? current_user.id)
+    if @project.memberships.where(user_id: current_user.id)
     else
       raise AccessDenied
     end
   end
 
   def current_user_is_owner_to_edit
-    current_membership = @project.all.memberships.where(user_id: current_user.id)
+    current_membership = @project.memberships.where(user_id: current_user.id)
     current_membership.each do |membership|
       @membership_role = membership.role
       if (membership.role == "owner") || (current_user.admin == true)
@@ -133,4 +141,5 @@ class MembershipsController < ApplicationController
 
   def membership_params
     params.require(:membership).permit(:user_id, :role, :project_id)
+  end
 end
