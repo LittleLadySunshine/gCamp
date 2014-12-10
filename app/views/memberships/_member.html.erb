@@ -6,6 +6,7 @@
   <li><a href="/projects">Projects</a></li>
   <li><%= link_to @project.name, @project %></li>
   <li class="active">Memberships</li>
+</ol>
 
   <% @project.users.each do |user| %>
   <% user.memberships.where(project_id: @project.id).each do |membership| %>

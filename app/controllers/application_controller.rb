@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   def owner?(project, user)
     membership = Membership.where(:project_id => project.id, :user_id => user.id).pluck(:id)
-    if Membership.find_by(id: membership[0]).role == Role.find_by_role("owner")
+    if Membership.find_by(id: membership[0]).role == Role.find_by("owner")
       true
     else
       false
