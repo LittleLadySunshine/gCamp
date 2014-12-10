@@ -29,7 +29,7 @@ end
   end
 
   def create
-    @project = Project.new(project_perams)
+    @project = Project.new(project_params)
     @membership = @project.memberships.new(
     :project_id => @project.id,
     :user_id => current_user.id,
