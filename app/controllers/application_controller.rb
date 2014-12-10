@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     unless current_user
+      store_location
       redirect_to signin_path, notice: "You must be logged in to access that action"
     end
   end
@@ -49,5 +50,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :has_owner?
 
+  def redirect_back_or(default)
+    redirect_to(session:[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  def store_location
+    session[:forwarding_url] = request.url if request.get?
+  end
 
 end
