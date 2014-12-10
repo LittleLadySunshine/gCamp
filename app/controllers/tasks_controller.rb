@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   # before_action :current_user_has_tasks_permission
-
+  before_action :logged_in?
   before_action do
     @project = Project.find(params[:project_id])
   end
