@@ -5,12 +5,23 @@ class TasksController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :only => [:show, :edit, :update, :destroy] do
+    set_task
+    if @project.users.include? current_user
+    else
+      raise AccessDenied
+    end
+  end
+
   # GET /tasks
   # GET /tasks.json
+
   def index
-    @tasks = @project.tasks.where(complete: false)
-    if params[:sort] == 'all'
-      @tasks = @project.tasks.all
+    @tasks = if params[:sort_by] == 'complete'
+      @project.tasks.where(:complete => false)
+    else
+      @project.tasks.all
     end
   end
 
@@ -29,7 +40,6 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
-    @task = @project.tasks.find(params[:id])
   end
 
   # POST /tasks
@@ -46,35 +56,24 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    @task = @project.tasks.find(params[:id])
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to project_task_path(@project, @task),
-          notice: 'Task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      redirect_to project_task_path(@project, @task), notice: 'Task was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
-    @task = @project.tasks.find(params[:id])
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to project_tasks_path(@project),
-        notice: 'Task was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to project_tasks_path, notice: 'Task was successfully destroyed.'
   end
 
   private
   # # Use callbacks to share common setup or constraints between actions.
-  def set_project
-    @project = Project.find(params[:project_id])
+  def set_task
+    @task = @project.tasks.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
