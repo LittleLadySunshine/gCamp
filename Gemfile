@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'faraday', '~> 0.9.0'
+
 gem 'faker'
 
 gem "pg"
@@ -38,6 +40,7 @@ gem 'spring',        group: :development
 gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
+  gem 'dotenv', '~> 1.0.2'
   gem 'rspec-rails'
   gem "capybara"
   gem 'launchy'

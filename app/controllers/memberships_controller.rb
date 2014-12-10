@@ -71,7 +71,7 @@ class MembershipsController < ApplicationController
 
     def destroy
       if current_user.admin == false
-        @membership = @project.membership.fine(param[:id])
+        @membership = @project.memberships.find(params[:id])
         member = @project.memberships.where(user_id: current_user.id)
         @role = member[0]
       end
@@ -126,7 +126,7 @@ class MembershipsController < ApplicationController
   end
 
   def can_delete_membership
-    current_membership = @project.all.memberships.where(user_id: current_user.id)
+    current_membership = @project.memberships.where(user_id: current_user.id)
     current_membership.each do |membership|
       @membership_role = membership.role
       if (membership.role == "owner") || (current_user.admin == true)
