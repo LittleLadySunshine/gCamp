@@ -23,28 +23,13 @@ class MembershipsController < ApplicationController
 
   def create
     @membership = @project.memberships.new(membership_params)
-    if current_user.admin == false
-      member = @project.memberships.where(user_id: current_user.id)
-      @role = member[0]
-      @membership.save
-      @id = @membership.user_id
-      redirect_to project_memberships_path(@project),
-      notice: "#{User.find(@id).full_name} was successfully created."
+    if @membership.save
+      redirect_to project_memberships_path,
+      :notice => "#{@membership.user.full_name} was added successfully"
+    else
+      render :index
     end
-
-    @membership = @project.memberships.new(membership_params)
-      if @role == "owner" || current_user.admin == true
-        if @membership.save
-          redirect_to project_memberships_path(@project),
-          notice: "#{@membership.user.full_name} was successfully created."
-        else
-          owners = @project.memberships.where(role: "owner")
-          @total_owners = owners.count
-          @memberships = @project.memberships.all
-          render :index
-        end
-      end
-    end
+  end
 
     def show
       @membership = @project.memberships.find(params[:id])
@@ -68,74 +53,32 @@ class MembershipsController < ApplicationController
       end
     end
 
-    def destroy
-      if current_user.admin == false
-        @membership = @project.memberships.find(params[:id])
-        member = @project.memberships.where(user_id: current_user.id)
-        @role = member[0].role
-      end
 
-      @owners = @project.memberships.where(role: "owner")
-        if @role == 'member' || @role == "owner" || current_user.admin == true
-          @membership.destroy
-          redirect_to projects_path, notice: "#{@membership.user.full_name} was removed successfully"
-        elsif @owners.count > 1 && @role == "owner" || current_user.admin == true
-          if @membership.user.id == current_user.id
-            @membership.destroy
-            redirect_to projects path
-          else
-            @membership.destroy
-            redirect_to project_memberships_path(
-            @project), notice: "#{@membership.user.full_name} was removed successfully"
-          end
-        elsif @role == "owner" || current_user.admin == true
-          if @membership.user.id != current_user.id
-            @membership.destroy
-            redirect_to project_memberships_path(
-            @project), notice: "#{@membership.user.full_name} was removed successfully"
-          end
-        else
-        raise AccessDenied
-        end
+    def update
+      set_membership
+      @membership.update(membership_params)
+      redirect_to project_memberships_path,
+      :notice => "#{@membership.user.full_name} was updated successfully"
+    end
+
+
+
+    def destroy
+      set_membership
+      if @project.memberships.count != 1 || has_owner?(@project)
+        @membership.destroy
+        redirect_to project_memberships_path,
+        :notice => "#{@membership.user.full_name} was deleted successfully"
+      else
+        render "index"
+      end
+    end
   end
 
   private
 
   def set_membership
     @membership = @project.memberships.find(params[:id])
-  end
-
-  def current_user_has_membership_permission
-    if @project.memberships.where(user_id: current_user.id)
-    else
-      raise AccessDenied
-    end
-  end
-
-  def current_user_is_owner_to_edit
-    current_membership = @project.memberships.where(user_id: current_user.id)
-    current_membership.each do |membership|
-      @membership_role = membership.role
-      if (membership.role == "owner") || (current_user.admin == true)
-        true
-      else
-        raise AccessDenied
-      end
-    end
-  end
-
-  def can_delete_membership
-    current_membership = @project.memberships.where(user_id: current_user.id)
-    current_membership.each do |membership|
-      @membership_role = membership.role
-      if (membership.role == "owner") || (current_user.admin == true)
-        true
-      elsif @membership.user_id == current_user.id
-        true
-      else
-        raise AccessDenied
-      end
-    end
   end
 
   def membership_params
