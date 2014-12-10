@@ -31,14 +31,15 @@ end
   def create
     @project = Project.new(project_params)
     @membership = @project.memberships.new(
-    :project_id => @project.id,
-    :user_id => current_user.id,
-    :role_id => Role.find_by_role("owner").id)
+      project_id: @project.id,
+      user_id: current_user.id,
+      role: "owner")
     @membership.save
     if @project.save
       redirect_to project_tasks_path(@project), notice: "Project was created successfully"
     else
       render :new
+    end
     end
   end
 
@@ -77,5 +78,3 @@ end
   def set_project
     @project = Project.find(params[:id])
   end
-
-end
