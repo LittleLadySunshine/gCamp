@@ -8,7 +8,7 @@ class MembershipsController < ApplicationController
 
   before_action :only => [:edit, :update, :destroy] do
     set_membership
-    if owner?(@project, current_user)
+    if current_user.admin || owner?(@project, current_user)
     else
       raise AccessDenied
     end
