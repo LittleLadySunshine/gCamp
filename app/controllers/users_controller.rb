@@ -25,7 +25,11 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if current_user.admin == true
+      @user = User.new
+    else
+      render "public/404", layout: false, status: 404
+    end
   end
 
   def edit

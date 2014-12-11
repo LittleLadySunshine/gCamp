@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   helper_method :owner?
 
   def has_owner?(project)
-    owners = Membership.where(:project_id => project.id, :role_id => Role.find_by_role("owner").id).pluck(:id)
+    owners = Membership.where(:project_id => project.id, :role_id => Role.find_by("owner").id).pluck(:id)
     if owners.count >= 2
       true
     else
@@ -49,11 +49,11 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :has_owner?
-
-  def redirect_back_or(default)
-    redirect_to(session:[:forwarding_url] || default)
-    session.delete(:forwarding_url)
-  end
+  # 
+  # def redirect_back_or(default)
+  #   redirect_to(session:[:forwarding_url] || default)
+  #   session.delete(:forwarding_url)
+  # end
 
   def store_location
     session[:forwarding_url] = request.url if request.get?
