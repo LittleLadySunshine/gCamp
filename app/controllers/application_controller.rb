@@ -28,35 +28,35 @@ class ApplicationController < ActionController::Base
     render "public/404", status: 404, layout: false
   end
 
-  def owner?(project, user)
-    membership = Membership.where(:project_id => project.id, :user_id => user.id).pluck(:id)
-    if Membership.find_by(id: membership[0]).role == Role.find_by("owner")
-      true
-    else
-      false
-    end
-  end
+  # def owner?(project, user)
+  #   membership = Membership.where(:project_id => project.id, :user_id => user.id).pluck(:id)
+  #   if Membership.find_by(id: membership[0]).role == Membership.role.find_by("owner")
+  #     true
+  #   else
+  #     false
+  #   end
+  # end
 
   helper_method :owner?
 
-  def has_owner?(project)
-    owners = Membership.where(:project_id => project.id, :role_id => Role.find_by("owner").id).pluck(:id)
-    if owners.count >= 2
-      true
-    else
-      false
-    end
-  end
+  # def has_owner?(project)
+  #   owners = Membership.where(:project_id => project.id, :role_id => Membership.role.find_by("owner").id).pluck(:id)
+  #   if owners.count >= 2
+  #     true
+  #   else
+  #     false
+  #   end
+  # end
 
   helper_method :has_owner?
-  # 
+  #
   # def redirect_back_or(default)
   #   redirect_to(session:[:forwarding_url] || default)
   #   session.delete(:forwarding_url)
   # end
-
-  def store_location
-    session[:forwarding_url] = request.url if request.get?
-  end
+  # 
+  # def store_location
+  #   session[:forwarding_url] = request.url if request.get?
+  # end
 
 end

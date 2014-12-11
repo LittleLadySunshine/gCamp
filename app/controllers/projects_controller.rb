@@ -17,13 +17,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  
   def index
-    if current_user.admin == true
-      @projects = Project.all
-    else current_user
-      @projects = current_user.projects
-    end
+    @projects = Project.all
+    tracker_api = TrackerAPI.new
+    @tracker_projects = tracker_api.projects(current_user.tracker_token)
   end
 
 
