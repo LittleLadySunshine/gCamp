@@ -6,7 +6,7 @@ class MembershipsController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
-  before_action :only => [:edit, :update, :destroy] do
+  before_action :only => [:edit, :update, :destroy, :index] do
     set_membership
     if current_user.admin || owner?(@project, current_user)
     else

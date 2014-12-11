@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
 
   before_action :only => [:edit, :update, :destroy] do
     set_project
-    if owner?(@project, current_user)
+    if current_user.admin || owner?(@project, current_user)
     else
       raise AccessDenied
     end
@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
     @tracker_projects = tracker_api.projects(current_user.tracker_token)
   end
 
-
+# if current user is admin, allow them to do ________
 
   def new
     @project = Project.new
@@ -71,6 +71,8 @@ end
 
 
 private
+
+
 
 def project_params
   params.require(:project).permit(:name)
