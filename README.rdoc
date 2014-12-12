@@ -30,3 +30,5 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+[![Test Coverage](https://codeclimate.com/github/LittleLadySunshine/gCamp/badges/coverage.svg)](https://codeclimate.com/github/LittleLadySunshine/gCamp)
