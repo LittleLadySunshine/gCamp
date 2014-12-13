@@ -20,34 +20,28 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    set_user
-  end
 
   def new
-    if current_user.admin == true
-      @user = User.new
+    @user = User.new
+  end
+
+
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to users_path, notice: 'User was successfully created.'
     else
-      render "public/404", layout: false, status: 404
+      render :new
     end
   end
+
 
   def edit
     set_user
   end
 
-  def create
-    if (current_user != nil) && current_user.admin == true
-      @user = User.new(params.require(:user).permit(:first_name, :last_name, :email,
-      :password, :password_confirmation, :admin))
-    else
-      @user = User.new(user_params)
-    end
-    if @user.save
-      redirect_to users_url, notice: 'User was successfully created.'
-    else
-      render :new
-    end
+  def show
+    set_user
   end
 
   def update
@@ -82,4 +76,5 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
+  
 end
