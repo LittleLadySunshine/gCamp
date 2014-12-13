@@ -10,5 +10,6 @@ class TrackerProjects < ApplicationController
       if params[:id] == project[:id].to_s
         @name = project[:name]
       end
+    end
   end
 end
