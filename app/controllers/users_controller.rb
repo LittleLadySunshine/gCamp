@@ -8,18 +8,21 @@ class UsersController < ApplicationController
     end
   end
 
+
   def index
-    if current_user.admin
-      @users = User.all
-    else
-      @users = []
-      current_user.projects.each do |project|
-        @users += project.users
-      end
-      @users = @users.uniq
-    end
+    @users = User.all
+    memberships = Membership.where(user_id: current_user.id)
+    member_projects = memberships.pluck(:project_id)
+    all_members = Membership.where(project_id: member_projects)
+    @other_users = all_members.pluck(:user_id)
   end
 
+  def show
+    memberships = Membership.where(user_id: current_user.id)
+    member_projects = memberships.pluck(:project_id)
+    all_members = Membership.where(project_id: member_projects)
+    @other_users = all_members.pluck(:user_id)
+  end
 
   def new
     @user = User.new
@@ -37,10 +40,6 @@ class UsersController < ApplicationController
 
 
   def edit
-    set_user
-  end
-
-  def show
     set_user
   end
 
@@ -76,5 +75,5 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
-  
+
 end

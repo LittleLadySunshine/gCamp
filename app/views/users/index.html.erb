@@ -24,7 +24,7 @@
       <td>
         <%= mail_to(user.email) %>
       </td>
-      <% if user == current_user || current_user.admin %>
+      <% if user == current_user || current_user.admin || @other_users.include?(user.id) %>
       <td align="right">
         <%= link_to "edit", edit_user_path(user) %>
       </td>
