@@ -42,7 +42,6 @@ class ProjectsController < ApplicationController
         render :new
       end
     end
-  end
 
 
   def edit
@@ -67,7 +66,6 @@ class ProjectsController < ApplicationController
     @project.destroy
     redirect_to projects_path, notice: 'Project was successfully destroyed.'
   end
-
 
 
   private
