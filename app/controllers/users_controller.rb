@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    set_user
     memberships = Membership.where(user_id: current_user.id)
     member_projects = memberships.pluck(:project_id)
     all_members = Membership.where(project_id: member_projects)
