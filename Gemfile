@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.1.5'
+
 gem 'faraday', '~> 0.9.0'
 
 gem 'faker'
