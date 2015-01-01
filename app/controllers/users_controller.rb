@@ -8,7 +8,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   def index
     @users = User.all
     memberships = Membership.where(user_id: current_user.id)
